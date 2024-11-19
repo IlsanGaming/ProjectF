@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL" };
+        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL", "EnemyB" };
         ReadSpawnFile();
     }
 
@@ -93,6 +93,9 @@ public class GameManager : MonoBehaviour
             case "L":
                 enemyIndex = 2;
                 break;
+            case "B":
+                enemyIndex = 3;
+                break;
         }
         int enemyPoint = spawnList[spawnIndex].point;
         GameObject enemy = objectManager.MakeObj(enemyObjs[enemyIndex]);
@@ -102,6 +105,7 @@ public class GameManager : MonoBehaviour
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         enemyLogic.player= player;
+        enemyLogic.gameManager = this;
         enemyLogic.objectManager = objectManager;
         if(enemyPoint == 5|| enemyPoint == 6)
         {//enemy right speed
@@ -141,6 +145,14 @@ public class GameManager : MonoBehaviour
 
         Player playerLogic = player.GetComponent<Player>();
         playerLogic.isHit = false;
+    }
+    public void CallExplosion(Vector3 pos,string type)
+    {
+        GameObject explosion = objectManager.MakeObj("Explosion");
+        Explosion explosionLogic = explosion.GetComponent<Explosion>();
+
+        explosion.transform.position = pos;
+        explosionLogic.StartExplosion(type);
     }
     public void UpdateLifeIcon(int life)
     {

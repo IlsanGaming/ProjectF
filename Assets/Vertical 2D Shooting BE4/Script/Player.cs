@@ -38,14 +38,45 @@ public class Player : MonoBehaviour
     public bool isBoomTime;
 
     public GameObject[] followers;
+    public bool isRespawnTime;
 
     //좌우키를 누를시 애니메이션 활용
     Animator animator;
+    SpriteRenderer spriteRenderer;
 
     void Awake()
     {
         //애니메이터 할당
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    void OnEnable()
+    {
+        isRespawnTime = true;
+        Invoke("Unbeatable", 3);
+    }
+    void Unbeatable(bool active)
+    {
+        isRespawnTime = !isRespawnTime;
+        if (active)
+        {
+            isRespawnTime = true;
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+            for(int index=0;index<followers.Length;index++)
+            {//무적타임 이펙트(투명)
+                followers[index].GetComponent<SpriteRenderer>().color= new Color(1, 1, 1, 0.5f);
+            }
+        }
+        else
+        {
+            isRespawnTime = false;
+            spriteRenderer.color = new Color(1, 1, 1, 1);
+            for (int index = 0; index < followers.Length; index++)
+            {
+                //무적타임 종료(원래대로)
+                followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            }
+        }
     }
     void Update()
     {
@@ -195,9 +226,9 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag=="Border")
+        if (collision.gameObject.tag == "Border")
         {
-            switch(collision.gameObject.name)
+            switch (collision.gameObject.name)
             {
                 case "Top":
                     isTouchTop = true; break;
@@ -209,16 +240,19 @@ public class Player : MonoBehaviour
                     isTouchLeft = true; break;
             }
         }
-        else if(collision.gameObject.tag== "Enemy" ||collision.gameObject.tag=="EnemyBullet")
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            if (isRespawnTime)
+                return;
             if (isHit)
                 return;
 
             isHit = true;
             life--;
             gameManager.UpdateLifeIcon(life);
+            gameManager.CallExplosion(transform.position, "P");
 
-            if(life == 0)
+            if (life == 0)
             {
                 gameManager.GameOver();
             }
@@ -228,26 +262,38 @@ public class Player : MonoBehaviour
             }
             gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
-
+            if (collision.gameObject.tag == "Enemy")
+            {
+                GameObject bossGo = collision.gameObject;
+                Enemy enemyBoss = bossGo.GetComponent<Enemy>();
+                if (enemyBoss.enemyname == "B")
+                {
+                    return;
+                }
+                else
+                {
+                    collision.gameObject.SetActive(false);
+                }
+            }
         }
-        else if(collision.gameObject.tag=="Item")
+        else if (collision.gameObject.tag == "Item")
         {
             Item item = collision.gameObject.GetComponent<Item>();
-            switch(item.type)
+            switch (item.type)
             {
                 case "Coin":
                     score += 1000;
                     break;
                 case "Power":
-                    if (Power==maxPower)
+                    if (Power == maxPower)
                         score += 500;
                     else
                     {
                         Power++;
                         AddFollower();
                     }
-                        
-                 
+
+
                     break;
                 case "Boom":
                     if (boom == maxboom)
@@ -257,7 +303,7 @@ public class Player : MonoBehaviour
                         boom++;
                         gameManager.UpdateBoomIcon(boom);
                     }
-                        
+
                     break;
             }
             Destroy(collision.gameObject);
