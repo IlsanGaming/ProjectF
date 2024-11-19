@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
                 health = 3;
                 break;
             case "B":
-                health = 3000;
+                health = 100;
                 Invoke("Stop",2);
                 break;
         }
@@ -286,9 +286,15 @@ public class Enemy : MonoBehaviour
             }
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
-            CancelInvoke();
+            //CancelInvoke();
 
             gameManager.CallExplosion(transform.position, enemyname);
+
+            //Boss Kill
+            if(enemyname == "B")
+            {
+                gameManager.StageEnd();
+            }
         }
     }
 

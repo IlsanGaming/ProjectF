@@ -60,7 +60,7 @@ public class ObjectManager : MonoBehaviour
         bulletBossA = new GameObject[50];
         bulletBossB = new GameObject[1000];
 
-        explosion = new GameObject[20];
+        explosion = new GameObject[50];
 
         Generate();
     }
