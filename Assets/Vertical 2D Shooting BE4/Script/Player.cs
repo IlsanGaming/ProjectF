@@ -5,114 +5,117 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // 플레이어의 이동 속도와 공격 관련 변수
+    public float speed; // 이동 속도
+    public float MaxShotDelay; // 최대 발사 딜레이
+    public float CurShotDelay; // 현재 발사 딜레이
+    public int Power; // 현재 파워 레벨
+    public int maxPower; // 최대 파워 레벨
+    public int boom; // 현재 폭탄 개수
+    public int maxboom; // 최대 폭탄 개수
 
-    //Moving and Attck 변수 할당
-    public float speed;
-    public float MaxShotDelay;
-    public float CurShotDelay;
-    public int Power;
-    public int maxPower;
-    public int boom;
-    public int maxboom;
+    // 플레이어의 라이프와 점수
+    public int life; // 남은 라이프 수
+    public int score; // 현재 점수
 
-    //life and score 변수 할당
-    public int life;
-    public int score;
-
-    //플레이어가 BorderLine에 닿았을시
-    //조작키가 비활성화 되도록 하는 변수
+    // 화면 경계와의 충돌 상태를 나타내는 변수
     public bool isTouchTop;
     public bool isTouchBottom;
     public bool isTouchLeft;
     public bool isTouchRight;
 
-    //플레이어가 발사하는 총알 오브젝트
-    public GameObject bulletObjA;
-    public GameObject bulletObjB;
-    public GameObject boomEffect;
+    // 플레이어가 발사하는 총알 및 폭탄 이펙트 오브젝트
+    public GameObject bulletObjA; // 기본 총알
+    public GameObject bulletObjB; // 강화 총알
+    public GameObject boomEffect; // 폭탄 이펙트
 
-
-    //Game 매니저 연결
+    // 게임 매니저 및 오브젝트 매니저
     public GameManager gameManager;
     public ObjectManager objectManager;
-    public bool isHit;
-    public bool isBoomTime;
 
+    // 플레이어 상태 관련 변수
+    public bool isHit; // 현재 플레이어가 피격 상태인지 여부
+    public bool isBoomTime; // 폭탄 사용 가능 여부
+
+    // 플레이어를 따라다니는 보조 오브젝트
     public GameObject[] followers;
-    public bool isRespawnTime;
+    public bool isRespawnTime; // 리스폰 상태인지 여부
 
-    //좌우키를 누를시 애니메이션 활용
+    // 애니메이션 및 스프라이트 렌더러
     Animator animator;
     SpriteRenderer spriteRenderer;
 
+    // 조이스틱 및 컨트롤 관련 변수
     public bool[] joyControl;
     public bool isControl;
-    public bool isButtonA;
-    public bool isButtonB;
+    public bool isButtonA; // 공격 버튼 상태
+    public bool isButtonB; // 폭탄 버튼 상태
 
+    // Awake: 초기화 작업을 수행
     void Awake()
     {
-        //애니메이터 할당
+        // Animator와 SpriteRenderer 컴포넌트 가져오기
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    // OnEnable: 오브젝트 활성화 시 호출
     void OnEnable()
     {
+        // 무적 상태 활성화
         Unbeatable();
-        Invoke("Unbeatable", 3);
+        Invoke("Unbeatable", 3); // 3초 후 무적 상태 해제
     }
     void Unbeatable()
     {
-        isRespawnTime = !isRespawnTime;
+        isRespawnTime = !isRespawnTime; // 무적 상태를 토글
         if (isRespawnTime)
         {
+            // 무적 상태에서 반투명 처리
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
-            for(int index=0;index<followers.Length;index++)
+            foreach (var follower in followers)
             {
-                followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                follower.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
             }
         }
         else
         {
+            // 무적 상태 해제 후 원래 색상으로 복구
             spriteRenderer.color = new Color(1, 1, 1, 1);
-            for (int index = 0; index < followers.Length; index++)
+            foreach (var follower in followers)
             {
-                followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                follower.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
             }
         }
     }
+    // 매 프레임 호출되는 업데이트 함수
     void Update()
     {
-        //이동. 발사. 재장전으로 간소화
-        Move();
-        Fire();
-        Boom();
-        Reload();
+        Move();   // 이동 처리
+        Fire();   // 총알 발사
+        Boom();   // 폭탄 사용
+        Reload(); // 발사 딜레이 갱신
     }
+    // 조이스틱 입력 처리 함수
     public void JoyPanel(int type)
     {
-        for(int index=0;index<9;index++)
+        for (int index = 0; index < 9; index++)
         {
             joyControl[index] = index == type;
         }
     }
-    public void JoyDown()
-    {
-        isControl = true;
-    }
-    public void JoyUp()
-    {
-        isControl= false;
-    }
+    public void JoyDown() { isControl = true; }
+    public void JoyUp() { isControl = false; }
 
+    // 플레이어 이동 처리 함수
     void Move()
     {
-        //Keyboard Control Value
+        // 키보드 입력값 가져오기
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        //Joy Control Value
-        if (joyControl[0]) { h = -1;v = 1; }
+        // 조이스틱 입력값 적용
+        if (joyControl[0]) { h = -1; v = 1; }
         if (joyControl[1]) { h = 0; v = 1; }
         if (joyControl[2]) { h = 1; v = 1; }
         if (joyControl[3]) { h = -1; v = 0; }
@@ -122,89 +125,70 @@ public class Player : MonoBehaviour
         if (joyControl[7]) { h = 0; v = -1; }
         if (joyControl[8]) { h = 1; v = -1; }
 
-
-        if ((isTouchRight && h == -1)||(isTouchLeft && h ==1)||!isControl)
+        // 화면 경계 충돌 시 이동 제한
+        if ((isTouchRight && h == -1) || (isTouchLeft && h == 1) || !isControl)
             h = 0;
-
-        if ((isTouchTop && v==1)||(isTouchBottom && v==-1)||!isControl)
+        if ((isTouchTop && v == 1) || (isTouchBottom && v == -1) || !isControl)
             v = 0;
 
-        Vector3 curPos =transform.position;
+        // 현재 위치에서 입력값에 따른 이동 계산
+        Vector3 curPos = transform.position;
         Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime;
 
+        // 위치 업데이트
         transform.position = curPos + nextPos;
 
-        if(Input.GetButtonDown("Horizontal")||(Input.GetButtonUp("Horizontal")))
+        // 애니메이션 업데이트
+        if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
         {
             animator.SetInteger("Input", (int)h);
         }
-        
     }
     void Boom()
     {
-        //if (!Input.GetButton("Fire2"))
-        //   return;
-        if(!isButtonB)
-            return;
-
-        if (isBoomTime)
-            return;
-        if(boom ==0)
+        if (!isButtonB || isBoomTime || boom == 0)
             return;
 
         boom--;
         isBoomTime = true;
-        gameManager.UpdateBoomIcon(boom);
-        //Effect Visible
-        boomEffect.SetActive(true);
-        Invoke("OffBomeEffect", 4f);
+        gameManager.UpdateBoomIcon(boom); // UI 업데이트
 
-        //Remove Enemy
+        // 폭탄 이펙트 활성화
+        boomEffect.SetActive(true);
+        Invoke("OffBomeEffect", 4f); // 4초 후 폭탄 이펙트 비활성화
+
+        // 적과 적 총알 제거
+        RemoveEnemies();
+    }
+
+    // 적 제거 처리 함수
+    void RemoveEnemies()
+    {
         GameObject[] enemiesL = objectManager.GetPool("EnemyL");
         GameObject[] enemiesM = objectManager.GetPool("EnemyM");
         GameObject[] enemiesS = objectManager.GetPool("EnemyS");
-        for (int index = 0; index < enemiesL.Length; index++)
-        {
-            if (enemiesL[index].activeSelf)
-            {
-                Enemy enemyLogic = enemiesL[index].GetComponent<Enemy>();
-                enemyLogic.OnHit(1000);
-            }
-        }
-        for (int index = 0; index < enemiesM.Length; index++)
-        {
-            if (enemiesM[index].activeSelf)
-            {
-                Enemy enemyLogic = enemiesM[index].GetComponent<Enemy>();
-                enemyLogic.OnHit(1000);
-            }
-        }
-        for (int index = 0; index < enemiesS.Length; index++)
-        {
-            if (enemiesS[index].activeSelf)
-            {
-                Enemy enemyLogic = enemiesS[index].GetComponent<Enemy>();
-                enemyLogic.OnHit(1000);
-            }
-        }
-        //Remove Enemy Bullet
-        GameObject[] bulletsA = objectManager.GetPool("BulletEnemyA");
-        GameObject[] bulletsB = objectManager.GetPool("BulletEnemyB");
-        for (int index = 0; index < bulletsA.Length; index++)
-        {
-            if (bulletsA[index].activeSelf)
-            {
-                bulletsA[index].SetActive(false);
-            }
-        }
-        for (int index = 0;index<bulletsB.Length; index++)
-        {
-            if (bulletsB[index].activeSelf)
-            {
-                bulletsB[index].SetActive(false);
-            }
-        }
 
+        // 각 적 오브젝트에 대해 제거 처리
+        foreach (var enemy in enemiesL)
+            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
+
+        foreach (var enemy in enemiesM)
+            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
+
+        foreach (var enemy in enemiesS)
+            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
+
+        // 적 총알 제거
+        RemoveBullets("BulletEnemyA");
+        RemoveBullets("BulletEnemyB");
+    }
+
+    // 적 총알 제거 처리 함수
+    void RemoveBullets(string type)
+    {
+        GameObject[] bullets = objectManager.GetPool(type);
+        foreach (var bullet in bullets)
+            if (bullet.activeSelf) bullet.SetActive(false);
     }
     public void ButtonADown()
     {
@@ -221,174 +205,149 @@ public class Player : MonoBehaviour
 
     void Fire()
     {
-        //if(!Input.GetButton("Fire1"))
-        //    return;
-        if (!isButtonA)
-            return;
 
-        if (CurShotDelay < MaxShotDelay)
-            return;
 
-        switch(Power)
+        // 현재 파워 레벨에 따른 총알 생성
+        switch (Power)
         {
             case 1:
-                //Power One
-                GameObject bullet =objectManager.MakeObj("BulletPlayerA");
-                bullet.transform.position= transform.position;
-                Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-                rigidbody.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                CreateBullet("BulletPlayerA", Vector3.zero);
                 break;
             case 2:
-                GameObject bulletR = objectManager.MakeObj("BulletPlayerA");
-                bulletR.transform.position = transform.position + Vector3.right * 0.1f;
-                GameObject bulletL = objectManager.MakeObj("BulletPlayerA");
-                bulletL.transform.position = transform.position + Vector3.left * 0.1f;
-
-                Rigidbody2D rigidbodyR = bulletR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidbodyL = bulletL.GetComponent<Rigidbody2D>();
-                rigidbodyR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidbodyL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                CreateBullet("BulletPlayerA", Vector3.right * 0.1f);
+                CreateBullet("BulletPlayerA", Vector3.left * 0.1f);
                 break;
             default:
-                GameObject bulletRR = objectManager.MakeObj("BulletPlayerA");
-                bulletRR.transform.position = transform.position + Vector3.right * 0.35f;
-
-                GameObject bulletCC = objectManager.MakeObj("BulletPlayerB");
-                bulletCC.transform.position = transform.position;
-
-                GameObject bulletLL = objectManager.MakeObj("BulletPlayerA");
-                bulletLL.transform.position = transform.position + Vector3.left * 0.35f;
-
-                Rigidbody2D rigidbodyRR = bulletRR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidbodyCC = bulletCC.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidbodyLL = bulletLL.GetComponent<Rigidbody2D>();
-                rigidbodyRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidbodyCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidbodyLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break ;
+                CreateBullet("BulletPlayerA", Vector3.right * 0.35f);
+                CreateBullet("BulletPlayerB", Vector3.zero);
+                CreateBullet("BulletPlayerA", Vector3.left * 0.35f);
+                break;
         }
-        CurShotDelay = 0;
+        CurShotDelay = 0; // 발사 딜레이 초기화
+    }
+
+    // 총알 생성 함수
+    void CreateBullet(string type, Vector3 offset)
+    {
+        GameObject bullet = objectManager.MakeObj(type);
+        bullet.transform.position = transform.position + offset;
+        bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
     }
     void Reload()
     {
         CurShotDelay += Time.deltaTime;
     }
-
+    // 충돌 처리 함수
     void OnTriggerEnter2D(Collider2D collision)
     {
+        // 화면 경계와 충돌
         if (collision.gameObject.tag == "Border")
         {
-            switch (collision.gameObject.name)
-            {
-                case "Top":
-                    isTouchTop = true; break;
-                case "Bottom":
-                    isTouchBottom = true; break;
-                case "Right":
-                    isTouchRight = true; break;
-                case "Left":
-                    isTouchLeft = true; break;
-            }
+            SetBorderTouch(collision.gameObject.name, true);
         }
+        // 적 또는 적 총알과 충돌
         else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
-            if (isRespawnTime)
-                return;
-            if (isHit)
-                return;
+            HandleCollisionWithEnemy(collision);
+        }
+        // 아이템과 충돌
+        else if (collision.gameObject.tag == "Item")
+        {
+            HandleItemPickup(collision.gameObject.GetComponent<Item>());
+        }
+    }
 
-            isHit = true;
-            life--;
-            gameManager.UpdateLifeIcon(life);
-            gameManager.CallExplosion(transform.position, "P");
+    // 화면 경계 충돌 상태 설정
+    void SetBorderTouch(string borderName, bool state)
+    {
+        switch (borderName)
+        {
+            case "Top": isTouchTop = state; break;
+            case "Bottom": isTouchBottom = state; break;
+            case "Right": isTouchRight = state; break;
+            case "Left": isTouchLeft = state; break;
+        }
+    }
 
-            if (life == 0)
-            {
-                gameManager.GameOver();
-            }
-            else
-            {
-                gameManager.RespawnPlayer();
-            }
-            gameObject.SetActive(false);
-            collision.gameObject.SetActive(false);
-            if (collision.gameObject.tag == "Enemy")
-            {
-                GameObject bossGo = collision.gameObject;
-                Enemy enemyBoss = bossGo.GetComponent<Enemy>();
-                if (enemyBoss.enemyname == "B")
+    // 적 또는 적 총알과 충돌 처리
+    void HandleCollisionWithEnemy(Collider2D collision)
+    {
+        if (isRespawnTime || isHit)
+            return;
+
+        isHit = true;
+        life--;
+        gameManager.UpdateLifeIcon(life);
+        gameManager.CallExplosion(transform.position, "P");
+
+        if (life == 0)
+        {
+            gameManager.GameOver();
+        }
+        else
+        {
+            gameManager.RespawnPlayer();
+        }
+
+        collision.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    // 아이템 획득 처리
+    void HandleItemPickup(Item item)
+    {
+        switch (item.type)
+        {
+            case "Coin":
+                score += 1000;
+                break;
+            case "Power":
+                if (Power < maxPower)
                 {
-                    return;
+                    Power++;
+                    AddFollower();
                 }
                 else
                 {
-                    collision.gameObject.SetActive(false);
+                    score += 500;
                 }
-            }
+                break;
+            case "Boom":
+                if (boom < maxboom)
+                {
+                    boom++;
+                    gameManager.UpdateBoomIcon(boom);
+                }
+                else
+                {
+                    score += 500;
+                }
+                break;
         }
-        else if (collision.gameObject.tag == "Item")
-        {
-            Item item = collision.gameObject.GetComponent<Item>();
-            switch (item.type)
-            {
-                case "Coin":
-                    score += 1000;
-                    break;
-                case "Power":
-                    if (Power == maxPower)
-                        score += 500;
-                    else
-                    {
-                        Power++;
-                        AddFollower();
-                    }
-
-
-                    break;
-                case "Boom":
-                    if (boom == maxboom)
-                        score += 500;
-                    else
-                    {
-                        boom++;
-                        gameManager.UpdateBoomIcon(boom);
-                    }
-
-                    break;
-            }
-            Destroy(collision.gameObject);
-        }
+        Destroy(item.gameObject);
     }
+    // 보조 오브젝트 활성화
     void AddFollower()
     {
-        if(Power==4)
-            followers[0].SetActive(true);
-        else if(Power==5)
-            followers[1].SetActive(true);
-        else if(Power==6)
-            followers[2].SetActive(true);
+        if (Power >= 4 && Power - 4 < followers.Length)
+        {
+            followers[Power - 4].SetActive(true);
+        }
     }
 
+    // 폭탄 이펙트 비활성화
     void OffBomeEffect()
     {
         boomEffect.SetActive(false);
-        isBoomTime= false;
+        isBoomTime = false;
     }
+
+    // 화면 경계를 벗어날 때 호출
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border")
         {
-            switch (collision.gameObject.name)
-            {
-                case "Top":
-                    isTouchTop = false; break;
-                case "Bottom":
-                    isTouchBottom = false; break;
-                case "Right":
-                    isTouchRight = false; break;
-                case "Left":
-                    isTouchLeft = false; break;
-            }
+            SetBorderTouch(collision.gameObject.name, false);
         }
     }
 }

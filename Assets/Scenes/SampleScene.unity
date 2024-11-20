@@ -2702,7 +2702,10 @@ MonoBehaviour:
   objectManager: {fileID: 740271013}
   followPos: {x: 0, y: 0, z: 0}
   followDelay: 60
-  parent: {fileID: 983405091}
+  parent: {fileID: 1281740924}
+  orbitRadius: 1
+  orbitSpeed: 75
+  angleOffset: 360
 --- !u!212 &917183116
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2978,8 +2981,11 @@ MonoBehaviour:
   CurShotDelay: 0
   objectManager: {fileID: 740271013}
   followPos: {x: 0, y: 0, z: 0}
-  followDelay: 40
-  parent: {fileID: 1583413428}
+  followDelay: 60
+  parent: {fileID: 1281740924}
+  orbitRadius: 1
+  orbitSpeed: 75
+  angleOffset: 240
 --- !u!212 &983405093
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3564,7 +3570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3580014446115393626, guid: 6875e9ca69087ec4782ba183e2643e08, type: 3}
+  m_Sprite: {fileID: 1328899968, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5063,6 +5069,9 @@ MonoBehaviour:
   followPos: {x: 0, y: 0, z: 0}
   followDelay: 60
   parent: {fileID: 1281740924}
+  orbitRadius: 1
+  orbitSpeed: 75
+  angleOffset: 120
 --- !u!212 &1583413427
 SpriteRenderer:
   m_ObjectHideFlags: 0
