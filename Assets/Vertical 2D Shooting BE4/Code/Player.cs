@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     public GameObject bulletObjA;
     public GameObject bulletObjB;
     public GameObject boomEffect;
+    public GameObject[] followers;
     Rigidbody2D rigid;
 
 
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
         Move();
         Skill1();
         Skill1Reload();
-        //Skill2();
+        Skill2();
         //Skill2Reload();
         //Skill3();
         //Skill3Reload();
@@ -128,6 +129,30 @@ public class Player : MonoBehaviour
     {
 
     }
+    void Skill2()
+    {
+        switch (skill2Level)
+        {
+            case 1:
+                followers[0].SetActive(true);
+                break;
+            case 2:
+                followers[1].SetActive(true);
+                break;
+            case 3:
+                followers[2].SetActive(true);
+                break;
+            case 4:
+                for(int index=0;index<followers.Length;index++)
+                {
+                    Follower followerLogic= followers[index].GetComponent<Follower>();
+                    followerLogic.MaxShotDelay = 1;
+                }
+                
+                break;
+        }
+
+    }
     void Skill5()
     {
         if (!Input.GetButton("Fire2"))
@@ -140,7 +165,7 @@ public class Player : MonoBehaviour
         isSkill5 = true;
         gameManager.UpdateSkill5Icon(skill5Stack);
         boomEffect.SetActive(true);
-        Invoke("OffBoomEffect", 4f);
+        Invoke("OffBoomEffect", 1.5f);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int index = 0; index < enemies.Length; index++)
         {

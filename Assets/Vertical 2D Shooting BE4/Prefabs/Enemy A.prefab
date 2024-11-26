@@ -161,6 +161,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982e3b4ee7e8f34793ef72574c3d973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDatas:
+  - health: 10
+    maxShotSpeed: 2
+    speed: 10
+    enemyExp: 1
+  - health: 11
+    maxShotSpeed: 1.9
+    speed: 11
+    enemyExp: 2
+  - health: 12
+    maxShotSpeed: 1.8
+    speed: 12
+    enemyExp: 3
+  - health: 13
+    maxShotSpeed: 1.7
+    speed: 13
+    enemyExp: 4
+  - health: 14
+    maxShotSpeed: 1.6
+    speed: 14
+    enemyExp: 5
+  - health: 15
+    maxShotSpeed: 1.5
+    speed: 15
+    enemyExp: 6
+  - health: 16
+    maxShotSpeed: 1.4
+    speed: 16
+    enemyExp: 7
+  - health: 17
+    maxShotSpeed: 1.3
+    speed: 17
+    enemyExp: 8
+  - health: 18
+    maxShotSpeed: 1.2
+    speed: 18
+    enemyExp: 9
+  - health: 19
+    maxShotSpeed: 1.1
+    speed: 19
+    enemyExp: 10
   enemyName: S
   speed: 3
   health: 10
@@ -170,8 +211,8 @@ MonoBehaviour:
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
-  enemyLevel: 1
   enemyExp: 1
+  enemyLevel: 1
   player: {fileID: 0}
   objectManager: {fileID: 0}
   gameManager: {fileID: 0}

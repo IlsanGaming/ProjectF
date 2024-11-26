@@ -177,6 +177,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982e3b4ee7e8f34793ef72574c3d973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDatas:
+  - health: 20
+    maxShotSpeed: 0
+    speed: 20
+    enemyExp: 2
+  - health: 21
+    maxShotSpeed: 0
+    speed: 21
+    enemyExp: 4
+  - health: 22
+    maxShotSpeed: 0
+    speed: 22
+    enemyExp: 6
+  - health: 23
+    maxShotSpeed: 0
+    speed: 23
+    enemyExp: 8
+  - health: 24
+    maxShotSpeed: 0
+    speed: 24
+    enemyExp: 10
+  - health: 25
+    maxShotSpeed: 0
+    speed: 25
+    enemyExp: 12
+  - health: 26
+    maxShotSpeed: 0
+    speed: 26
+    enemyExp: 14
+  - health: 27
+    maxShotSpeed: 0
+    speed: 27
+    enemyExp: 16
+  - health: 28
+    maxShotSpeed: 0
+    speed: 28
+    enemyExp: 18
+  - health: 29
+    maxShotSpeed: 0
+    speed: 29
+    enemyExp: 20
   enemyName: M
   speed: 10
   health: 15
@@ -186,11 +227,8 @@ MonoBehaviour:
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
-  enemyLevel: 1
   enemyExp: 2
-  bulletObjA: {fileID: 3333415873993103063, guid: 9df1a1a2ecbdba340bbf5e32537c908f, type: 3}
-  bulletObjB: {fileID: 3333415873993103063, guid: dff1b50375ebd8149b194cc33b3d6d85, type: 3}
-  itemExp: {fileID: 1988925780149975448, guid: c60b987b200c9e54699486b4b3384f82, type: 3}
-  itemSkill: {fileID: 1831623762212598869, guid: b4170ed725f918a4e93749a11951c2b9, type: 3}
-  itemHealth: {fileID: 598214483195766555, guid: d7e2a89464aacc54db628e36b56b316e, type: 3}
+  enemyLevel: 1
   player: {fileID: 0}
+  objectManager: {fileID: 0}
+  gameManager: {fileID: 0}

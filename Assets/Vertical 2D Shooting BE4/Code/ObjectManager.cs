@@ -17,7 +17,7 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletPlayerBPrefab; // 플레이어의 강화 총알
     public GameObject bulletEnemyAPrefab; // 적의 기본 총알
     public GameObject bulletEnemyBPrefab; // 적의 강화 총알
-    //public GameObject bulletFollowerPrefab; // 플레이어의 보조 총알
+    public GameObject bulletFollowerPrefab; // 플레이어의 보조 총알
     //public GameObject bulletBossAPrefab; // 보스의 기본 총알
     //public GameObject bulletBossBPrefab; // 보스의 강화 총알
     //public GameObject explosionPrefab; // 폭발 이펙트
@@ -36,7 +36,7 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletPlayerB;
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
-    //GameObject[] bulletFollower;
+    GameObject[] bulletFollower;
     //GameObject[] bulletBossA;
     //GameObject[] bulletBossB;
     //GameObject[] explosion;
@@ -61,7 +61,7 @@ public class ObjectManager : MonoBehaviour
         bulletPlayerB = new GameObject[100];
         bulletEnemyA = new GameObject[100];
         bulletEnemyB = new GameObject[100];
-        //bulletFollower = new GameObject[100];
+        bulletFollower = new GameObject[100];
         //bulletBossA = new GameObject[50];
         //bulletBossB = new GameObject[1000];
 
@@ -134,11 +134,12 @@ public class ObjectManager : MonoBehaviour
             bulletEnemyB[index] = Instantiate(bulletEnemyBPrefab); // 적 강화 총알
             bulletEnemyB[index].SetActive(false);
         }
-        /*for (int index = 0; index < bulletFollower.Length; index++)
+        for (int index = 0; index < bulletFollower.Length; index++)
         {
             bulletFollower[index] = Instantiate(bulletFollowerPrefab); // 플레이어 보조 총알
             bulletFollower[index].SetActive(false);
         }
+        /*
         for (int index = 0; index < bulletBossA.Length; index++)
         {
             bulletBossA[index] = Instantiate(bulletBossAPrefab); // 보스 기본 총알
@@ -196,9 +197,10 @@ public class ObjectManager : MonoBehaviour
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
                 break;
-            /*case "BulletFollower":
+            case "BulletFollower":
                 targetPool = bulletFollower;
                 break;
+                /*
             case "BulletBossA":
                 targetPool = bulletBossA;
                 break;
@@ -258,6 +260,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "BulletPlayerB":
                 targetPool = bulletPlayerB;
+                break;
+            case "bulletFollower":
+                targetPool = bulletFollower;
                 break;
                 /*case "BulletEnemyA":
                     targetPool = bulletEnemyA;
