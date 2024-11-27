@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4689645031426174856}
   - component: {fileID: 1113271054942361149}
   - component: {fileID: 3339558691534060995}
-  - component: {fileID: 6738694597262063171}
+  - component: {fileID: -74702209613073966}
   m_Layer: 0
   m_Name: Follower Bullet
   m_TagString: PlayerBullet
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6738694597262063171
+--- !u!114 &-74702209613073966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7908516910122968073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf40b20fc3942b4f94775a32440783d, type: 3}
+  m_Script: {fileID: 11500000, guid: 463568f9052647a4eaa01c2e6f9ea158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 1
+  dmg: 5

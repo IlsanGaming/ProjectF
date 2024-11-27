@@ -27,10 +27,10 @@ public class BackGround : MonoBehaviour
             Vector3 backSpritePos = sprites[startIndex].localPosition;
             Vector3 frontSpritePos = sprites[endIndex].localPosition;
             sprites[endIndex].transform.localPosition = backSpritePos + Vector3.up* ViewHeight;
-            
-            int startIndexSave= startIndex;
+
+            int startIndexSave = startIndex;
             startIndex = endIndex;
-            endIndex = startIndexSave - 1 == -1 ? sprites.Length - 1 : startIndexSave - 1;
+            endIndex = (startIndexSave - 1 + sprites.Length) % sprites.Length;
         }
     }
 }

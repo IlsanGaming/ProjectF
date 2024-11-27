@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2361595684443177796}
   - component: {fileID: 5156347045437248787}
   m_Layer: 6
-  m_Name: Enemy C
+  m_Name: enemyL
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7397212874860131943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2926329, y: 4.0780363, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -173,44 +173,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDatas:
   - health: 50
-    maxShotSpeed: 1
-    speed: 5
+    maxShotSpeed: 0.8
+    speed: 3
     enemyExp: 5
   - health: 60
-    maxShotSpeed: 0.9
-    speed: 6
+    maxShotSpeed: 0.76
+    speed: 3.5
     enemyExp: 6
   - health: 70
-    maxShotSpeed: 0.8
-    speed: 7
+    maxShotSpeed: 0.72
+    speed: 4
     enemyExp: 7
   - health: 80
-    maxShotSpeed: 0.7
-    speed: 8
+    maxShotSpeed: 0.68
+    speed: 4.5
     enemyExp: 8
   - health: 90
-    maxShotSpeed: 0.6
-    speed: 9
+    maxShotSpeed: 0.64
+    speed: 5
     enemyExp: 9
   - health: 100
-    maxShotSpeed: 0.5
-    speed: 10
+    maxShotSpeed: 0.6
+    speed: 5.5
     enemyExp: 10
   - health: 110
-    maxShotSpeed: 0.4
-    speed: 11
+    maxShotSpeed: 0.56
+    speed: 6
     enemyExp: 11
   - health: 120
-    maxShotSpeed: 0.3
-    speed: 12
+    maxShotSpeed: 0.52
+    speed: 6.5
     enemyExp: 12
   - health: 130
-    maxShotSpeed: 0.2
-    speed: 13
+    maxShotSpeed: 0.48
+    speed: 7
     enemyExp: 13
   - health: 140
-    maxShotSpeed: 0.1
-    speed: 14
+    maxShotSpeed: 0.44
+    speed: 7.5
     enemyExp: 14
   enemyName: L
   speed: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   maxShotSpeed: 1
   enemyBulletSpeed: 10
   enemyExp: 4
-  enemyLevel: 1
+  enemyLevel: 0
   player: {fileID: 0}
   objectManager: {fileID: 0}
   gameManager: {fileID: 0}

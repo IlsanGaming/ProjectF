@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &342216272468538193
+--- !u!1 &7908516910122968073
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7219515436247416116}
-  - component: {fileID: 1829546059590693108}
-  - component: {fileID: 4914618692148952646}
-  - component: {fileID: 8016277043433168316}
-  - component: {fileID: 6917335756061994959}
-  m_Layer: 6
-  m_Name: Enemy A
-  m_TagString: Enemy
+  - component: {fileID: 6928917490607964450}
+  - component: {fileID: 4689645031426174856}
+  - component: {fileID: 1113271054942361149}
+  - component: {fileID: 3339558691534060995}
+  - component: {fileID: -7669260381778317936}
+  m_Layer: 0
+  m_Name: ChaseBullet
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7219515436247416116
+--- !u!4 &6928917490607964450
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342216272468538193}
+  m_GameObject: {fileID: 7908516910122968073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.85, y: 4.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1829546059590693108
+--- !u!212 &4689645031426174856
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342216272468538193}
+  m_GameObject: {fileID: 7908516910122968073}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,51 +76,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  m_Sprite: {fileID: -7803065417098437583, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.45833334}
+  m_Size: {x: 0.16666667, y: 0.29166666}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &4914618692148952646
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!61 &1113271054942361149
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342216272468538193}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &8016277043433168316
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342216272468538193}
+  m_GameObject: {fileID: 7908516910122968073}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -147,72 +120,55 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16666667, y: 0.5}
+    newSize: {x: 0.16666667, y: 0.29166666}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.25
---- !u!114 &6917335756061994959
+  m_Size: {x: 0.16, y: 0.45}
+  m_EdgeRadius: 0
+--- !u!50 &3339558691534060995
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908516910122968073}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &-7669260381778317936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342216272468538193}
+  m_GameObject: {fileID: 7908516910122968073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c982e3b4ee7e8f34793ef72574c3d973, type: 3}
+  m_Script: {fileID: 11500000, guid: 463568f9052647a4eaa01c2e6f9ea158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDatas:
-  - health: 10
-    maxShotSpeed: 2
-    speed: 10
-    enemyExp: 1
-  - health: 11
-    maxShotSpeed: 1.9
-    speed: 11
-    enemyExp: 2
-  - health: 12
-    maxShotSpeed: 1.8
-    speed: 12
-    enemyExp: 3
-  - health: 13
-    maxShotSpeed: 1.7
-    speed: 13
-    enemyExp: 4
-  - health: 14
-    maxShotSpeed: 1.6
-    speed: 14
-    enemyExp: 5
-  - health: 15
-    maxShotSpeed: 1.5
-    speed: 15
-    enemyExp: 6
-  - health: 16
-    maxShotSpeed: 1.4
-    speed: 16
-    enemyExp: 7
-  - health: 17
-    maxShotSpeed: 1.3
-    speed: 17
-    enemyExp: 8
-  - health: 18
-    maxShotSpeed: 1.2
-    speed: 18
-    enemyExp: 9
-  - health: 19
-    maxShotSpeed: 1.1
-    speed: 19
-    enemyExp: 10
-  enemyName: S
-  speed: 3
-  health: 10
-  sprites:
-  - {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  curShotSpeed: 0
-  maxShotSpeed: 1
-  enemyBulletSpeed: 10
-  enemyExp: 1
-  enemyLevel: 1
-  player: {fileID: 0}
-  objectManager: {fileID: 0}
-  gameManager: {fileID: 0}
+  dmg: 5

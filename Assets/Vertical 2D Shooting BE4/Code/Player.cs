@@ -9,7 +9,7 @@ using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
-
+    public static Player instance;
     public int skill1Level;
     public int skill2Level;
     public int skill3Level;
@@ -28,10 +28,11 @@ public class Player : MonoBehaviour
     public float speed;//이동속도  
     public float curVerticalBulletSpeed;//투사체 속도
     public float maxVerticalBulletSpeed;//최대 투사체 속도
+    public float curCharge;//충전 속도
+    public float maxCharge;//최대 충전 속도
     public float curShotSpeed;//장전속도
     public float maxShotSpeed;//최대 장전속도
     public float lightness;//플레이어가 적, 적 총알에 닿았을때 변화하는 정도
-    public int Exp;
 
 
     // 화면 경계와의 충돌 상태를 나타내는 변수
@@ -48,12 +49,14 @@ public class Player : MonoBehaviour
     public GameObject bulletObjB;
     public GameObject boomEffect;
     public GameObject[] followers;
+    public Scanner scanner;
     Rigidbody2D rigid;
 
 
     Animator anim;
     void Awake()
     {
+        instance = this; // Player 인스턴스 초기화
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
     }
@@ -65,11 +68,9 @@ public class Player : MonoBehaviour
         Skill1();
         Skill1Reload();
         Skill2();
-        //Skill2Reload();
-        //Skill3();
-        //Skill3Reload();
-        //Skill4();
-        //Skill4Reload();
+        Skill3();
+        Skill4();
+        Skill4Charge();
         Skill5();
     }
 
@@ -90,44 +91,67 @@ public class Player : MonoBehaviour
     }
     void Skill1()
     {
-        if(curShotSpeed < maxShotSpeed)
+        if (curShotSpeed < maxShotSpeed)
             return;
-        switch(skill1Level)
+
+        switch (skill1Level)
         {
             case 1:
-                GameObject bullet = Instantiate(bulletObjA, transform.position, transform.rotation);
-                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-                rigid.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
+                CreateSkill1("bulletPlayerA", Vector3.zero, new Color(255, 228, 0)); // 기본 색상
                 break;
             case 2:
-                GameObject bulletR = Instantiate(bulletObjA, transform.position + Vector3.right * 0.1f, transform.rotation);
-                GameObject bulletL = Instantiate(bulletObjA, transform.position + Vector3.left * 0.1f, transform.rotation);
-                Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
-                rigidR.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
-                rigidL.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
+                CreateSkill1("bulletPlayerA", Vector3.right * 0.1f, new Color(29, 219, 22));
+                CreateSkill1("bulletPlayerA", Vector3.left * 0.1f, new Color(29, 219, 22));
                 break;
             case 3:
-                GameObject bulletRR = Instantiate(bulletObjA, transform.position + Vector3.right * 0.35f, transform.rotation);
-                GameObject bulletCC = Instantiate(bulletObjB, transform.position, transform.rotation);
-                GameObject bulletLL = Instantiate(bulletObjA, transform.position + Vector3.left * 0.35f, transform.rotation);
-                Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidCC = bulletCC.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>();
-                rigidRR.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
-                rigidCC.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
-                rigidLL.AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
+                CreateSkill1("bulletPlayerB", Vector3.zero, new Color(255, 94, 0));
+                break;
+            case 4:
+                CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(95, 0, 255));
+                CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(95, 0, 255));
+                break;
+            case 5:
+                CreateSkill1("bulletPlayerA", new Vector3(0.65f, -0.25f, 0f), new Color(189, 189, 189));
+                CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(189, 189, 189));
+                CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(189, 189, 189));
+                CreateSkill1("bulletPlayerA", new Vector3(-0.65f, -0.25f, 0f), new Color(189, 189, 189));
+                break;
+            case 6:
+                CreateSkill1("bulletPlayerA", new Vector3(0.65f, -0.25f, 0f), new Color(255, 187, 0));
+                CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(255, 187, 0));
+                CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(255, 187, 0));
+                CreateSkill1("bulletPlayerA", new Vector3(-0.65f, -0.25f, 0f), new Color(255, 187, 0));
+                CreateSkill1("bulletPlayerA", new Vector3(-0.25f, -0.65f, 0f), new Color(255, 187, 0));
+                CreateSkill1("bulletPlayerA", new Vector3(0.25f, -0.65f, 0f), new Color(255, 187, 0));
+                break;
+            case 7:
+                CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(255, 0, 127));
+                CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(255, 0, 127));
+                CreateSkill1("bulletPlayerB", new Vector3(-0.65f, -0.5f, 0f), new Color(255, 0, 127));
+                CreateSkill1("bulletPlayerB", new Vector3(0.65f, -0.5f, 0f), new Color(255, 0, 127));
                 break;
         }
+
         curShotSpeed = 0;
     }
     void Skill1Reload()
     {
         curShotSpeed += Time.deltaTime;
     }
-    void CreatSkill1Bullet(string type,Vector3 offset)
-    {
 
+    void CreateSkill1(string type, Vector3 offset, Color bulletColor)
+    {
+        GameObject bullet = objectManager.MakeObj(type);
+        bullet.transform.position = transform.position + offset;
+
+        // SpriteRenderer를 통해 투사체 색상 변경
+        SpriteRenderer spriteRenderer = bullet.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = bulletColor;
+        }
+
+        bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.up * curVerticalBulletSpeed, ForceMode2D.Impulse);
     }
     void Skill2()
     {
@@ -151,7 +175,111 @@ public class Player : MonoBehaviour
                 
                 break;
         }
+    }
+    void Skill3()
+    {
+        if (curShotSpeed < maxShotSpeed)
+            return;
+        if (!scanner.nearestTarget)
+            return;
+        switch (skill3Level)
+        {
+            case 1:
+                CreateSkill3("bulletChase", Vector3.zero);
+                break;
+            case 2:
+                CreateSkill3("bulletChase", Vector3.right * 0.2f);
+                CreateSkill3("bulletChase", Vector3.left * 0.2f);
+                break;
+            case 3:
+                CreateSkill3("bulletChase", Vector3.zero);
+                CreateSkill3("bulletChase", Vector3.right * 0.2f);
+                CreateSkill3("bulletChase", Vector3.left * 0.2f);
+                break;
+            case 4:
+                CreateSkill3("bulletChase", Vector3.right * 0.1f);
+                CreateSkill3("bulletChase", Vector3.left * 0.1f);
+                CreateSkill3("bulletChase", new Vector3(-0.1f,0.5f,0));
+                CreateSkill3("bulletChase", new Vector3(0.1f, 0.5f, 0));
+                break;
+            case 5:
+                CreateSkill3("bulletChase", new Vector3(-0.1f, -0.5f, 0));
+                CreateSkill3("bulletChase", Vector3.zero);
+                CreateSkill3("bulletChase", new Vector3(0.1f, -0.5f, 0));
+                CreateSkill3("bulletChase", new Vector3(-0.2f, -1f, 0));
+                CreateSkill3("bulletChase", new Vector3(0.2f, -1f, 0));
+                break;
+        }
+    }
+    void Skill4()
+    {
+        // 체력이 최대일 경우 스킬 사용 불가
+        if (health >= maxhealth)
+        {
+            health = maxhealth;
+            return;
+        }
+        // 현재 충전량이 최대 충전에 도달하지 않았을 경우 스킬 사용 불가
+        if (curCharge < maxCharge)
+            return;
 
+        // 스킬 레벨에 따른 체력 회복
+        float gainMultiplier = 1f;
+        switch (skill4Level)
+        {
+            case 0:
+                curCharge = 0;
+                return;
+            case 1:
+                gainMultiplier = 1f;
+                break;
+            case 2:
+                gainMultiplier = 1.2f;
+                break;
+            case 3:
+                gainMultiplier = 1.4f;
+                break;
+            case 4:
+                gainMultiplier = 1.6f;
+                break;
+            case 5:
+                gainMultiplier = 2f;
+                break;
+        }
+        HealthGain(gainMultiplier);
+
+        // 충전량 초기화
+        curCharge = 0;
+    }
+
+    void Skill4Charge()
+    {
+        // 시간에 따라 충전량 증가
+        curCharge += Time.deltaTime;
+    }
+
+    void HealthGain(float gainMultiplier)
+    {
+        // 회복량 계산
+        float healAmount = health * (0.1f * gainMultiplier);
+
+        // 체력 회복
+        health += healAmount;
+
+        // 체력이 최대 체력을 초과하지 않도록 제한
+        if (health > maxhealth)
+            health = maxhealth;
+    }
+
+    void CreateSkill3(string type, Vector3 offset)
+    {
+        Vector3 targetPos= scanner.nearestTarget.position;
+        Vector3 dir= targetPos- transform.position;
+        dir= dir.normalized;
+        GameObject bullet = objectManager.MakeObj(type);
+        bullet.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        bullet.transform.position = transform.position + offset;
+        bullet.GetComponent<Rigidbody2D>().AddForce(dir * 20, ForceMode2D.Impulse);
     }
     void Skill5()
     {
@@ -163,7 +291,6 @@ public class Player : MonoBehaviour
             return;
         skill5Stack--;
         isSkill5 = true;
-        gameManager.UpdateSkill5Icon(skill5Stack);
         boomEffect.SetActive(true);
         Invoke("OffBoomEffect", 1.5f);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -181,19 +308,18 @@ public class Player : MonoBehaviour
     // 적 제거 처리 함수
     void RemoveEnemies()
     {
-        GameObject[] enemiesL = objectManager.GetPool("EnemyL");
-        GameObject[] enemiesM = objectManager.GetPool("EnemyM");
-        GameObject[] enemiesS = objectManager.GetPool("EnemyS");
-
-        // 각 적 오브젝트에 대해 제거 처리
+        GameObject[] enemiesL = objectManager.GetPool("enemyL");if (enemiesL == null) return;
+        GameObject[] enemiesM = objectManager.GetPool("enemyL");if (enemiesM == null) return;
+        GameObject[] enemiesS = objectManager.GetPool("enemyL");if (enemiesS == null) return;
         foreach (var enemy in enemiesL)
-            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
-
+            if (enemy != null && enemy.activeSelf)
+                enemy.GetComponent<Enemy>().OnHit(1000);
         foreach (var enemy in enemiesM)
-            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
-
+            if (enemy != null && enemy.activeSelf)
+                enemy.GetComponent<Enemy>().OnHit(1000);
         foreach (var enemy in enemiesS)
-            if (enemy.activeSelf) enemy.GetComponent<Enemy>().OnHit(1000);
+            if (enemy != null && enemy.activeSelf)
+                enemy.GetComponent<Enemy>().OnHit(1000);
 
         // 적 총알 제거
         RemoveBullets("BulletEnemyA");
@@ -224,32 +350,46 @@ public class Player : MonoBehaviour
             HandleItemPickup(collision.gameObject.GetComponent<Item>());
         }
     }
-    // 아이템 획득 처리
-    void HandleItemPickup(Item item)
+    public void HandleItemPickup(Item item)
     {
         switch (item.type)
         {
             case "Health":
-                health = maxhealth;
+                health *=1.1f;
+                if (health >= maxhealth)
+                {
+                    health = maxhealth; 
+                }
+                Debug.Log("Health Restored");
                 break;
+
             case "Exp":
-                Exp++;
+                for (int i = 0; i < 5; i++)
+                {
+                    gameManager.GetExp();
+                }
                 break;
+
             case "Boom":
                 if (skill5Stack == maxskill5Stack)
                 {
-                    Debug.Log("ExpGain");
-                    Exp++;
+                    gameManager.GetExp();
+                    Debug.Log("Skill5 Stack Full: Extra Experience Gained");
                 }
                 else
                 {
-                    Debug.Log("skill5StackGain");
                     skill5Stack++;
-                    gameManager.UpdateSkill5Icon(skill5Stack);
+                    Debug.Log("Skill5 Stack Increased");
                 }
                 break;
+
+            default:
+                Debug.LogWarning($"Unknown item type: {item.type}");
+                break;
         }
-        Destroy(item.gameObject);
+
+        // 아이템을 비활성화하고 풀로 반환
+        item.gameObject.SetActive(false);
     }
     void OffBoomEffect()
     {

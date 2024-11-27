@@ -18,6 +18,7 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletEnemyAPrefab; // 적의 기본 총알
     public GameObject bulletEnemyBPrefab; // 적의 강화 총알
     public GameObject bulletFollowerPrefab; // 플레이어의 보조 총알
+    public GameObject bulletChasePrefab; // 플레이어의 보조 총알
     //public GameObject bulletBossAPrefab; // 보스의 기본 총알
     //public GameObject bulletBossBPrefab; // 보스의 강화 총알
     //public GameObject explosionPrefab; // 폭발 이펙트
@@ -37,6 +38,7 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
     GameObject[] bulletFollower;
+    GameObject[] bulletChase;
     //GameObject[] bulletBossA;
     //GameObject[] bulletBossB;
     //GameObject[] explosion;
@@ -49,19 +51,20 @@ public class ObjectManager : MonoBehaviour
     {
         // 각각의 오브젝트 풀 배열 크기 설정
         //enemyB = new GameObject[10];
-        enemyL = new GameObject[10];
-        enemyM = new GameObject[10];
-        enemyS = new GameObject[20];
+        enemyL = new GameObject[30];
+        enemyM = new GameObject[30];
+        enemyS = new GameObject[50];
 
-        itemSkill = new GameObject[20];
-        itemExp = new GameObject[10];
-        itemHealth = new GameObject[10];
+        itemSkill = new GameObject[30];
+        itemExp = new GameObject[30];
+        itemHealth = new GameObject[30];
 
         bulletPlayerA = new GameObject[100];
         bulletPlayerB = new GameObject[100];
         bulletEnemyA = new GameObject[100];
         bulletEnemyB = new GameObject[100];
         bulletFollower = new GameObject[100];
+        bulletChase = new GameObject[100];
         //bulletBossA = new GameObject[50];
         //bulletBossB = new GameObject[1000];
 
@@ -95,7 +98,6 @@ public class ObjectManager : MonoBehaviour
             enemyS[index] = Instantiate(enemySPrefab); // 작은 적 생성
             enemyS[index].SetActive(false);
         }
-
         // #2 아이템 오브젝트 생성
         for (int index = 0; index < itemSkill.Length; index++)
         {
@@ -139,6 +141,11 @@ public class ObjectManager : MonoBehaviour
             bulletFollower[index] = Instantiate(bulletFollowerPrefab); // 플레이어 보조 총알
             bulletFollower[index].SetActive(false);
         }
+        for (int index = 0; index < bulletChase.Length; index++)
+        {
+            bulletChase[index] = Instantiate(bulletChasePrefab); // 플레이어 보조 총알
+            bulletChase[index].SetActive(false);
+        }
         /*
         for (int index = 0; index < bulletBossA.Length; index++)
         {
@@ -167,13 +174,13 @@ public class ObjectManager : MonoBehaviour
             /*case "EnemyB":
                 targetPool = enemyB;
                 break;*/
-            case "EnemyL":
+            case "enemyL":
                 targetPool = enemyL;
                 break;
-            case "EnemyM":
+            case "enemyM":
                 targetPool = enemyM;
                 break;
-            case "EnemyS":
+            case "enemyS":
                 targetPool = enemyS;
                 break;
             case "itemSkill":
@@ -185,23 +192,26 @@ public class ObjectManager : MonoBehaviour
             case "itemHealth":
                 targetPool = itemHealth;
                 break;
-            case "BulletPlayerA":
+            case "bulletPlayerA":
                 targetPool = bulletPlayerA;
                 break;
-            case "BulletPlayerB":
+            case "bulletPlayerB":
                 targetPool = bulletPlayerB;
                 break;
-            case "BulletEnemyA":
+            case "bulletEnemyA":
                 targetPool = bulletEnemyA;
                 break;
-            case "BulletEnemyB":
+            case "bulletEnemyB":
                 targetPool = bulletEnemyB;
                 break;
-            case "BulletFollower":
+            case "bulletFollower":
                 targetPool = bulletFollower;
                 break;
-                /*
-            case "BulletBossA":
+            case "bulletChase":
+                targetPool = bulletChase;
+                break;
+            /*
+             case "BulletBossA":
                 targetPool = bulletBossA;
                 break;
             case "BulletBossB":
@@ -209,24 +219,44 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "Explosion":
                 targetPool = explosion;
-                break;*/
+                break;
+            */
             default:
                 Debug.LogError($"'{type}'에 해당하는 오브젝트 풀을 찾을 수 없습니다.");
                 return null;
         }
 
-        // 비활성화된 오브젝트를 찾아 활성화 후 반환
-        for (int index = 0; index < targetPool.Length; index++)
+        // 사용 가능한 비활성화된 오브젝트 찾기
+        foreach (var obj in targetPool)
         {
-            if (targetPool[index] != null && !targetPool[index].activeSelf)
+            if (obj != null && !obj.activeSelf)
             {
-                targetPool[index].SetActive(true);
-                return targetPool[index];
+                obj.SetActive(true);
+                return obj;
             }
         }
 
-        Debug.LogWarning($"'{type}' 풀에서 사용할 수 있는 오브젝트가 없습니다.");
-        return null;
+        // 새로 생성 시도
+        Debug.LogWarning($"'{type}' 오브젝트 풀이 비어 있습니다. 새로 생성을 시도합니다.");
+        GameObject prefab = null;
+
+        if (prefab == null)
+        {
+            Debug.LogError($"'{type}' 프리팹이 설정되지 않았습니다.");
+            return null;
+        }
+
+        GameObject newObj = Instantiate(prefab);
+        if (newObj != null)
+        {
+            newObj.SetActive(false);
+            return newObj;
+        }
+        else
+        {
+            Debug.LogError($"'{type}' 오브젝트 생성에 실패했습니다.");
+            return null;
+        }
     }
 
     // GetPool: 특정 타입의 오브젝트 풀 배열을 반환
@@ -237,13 +267,13 @@ public class ObjectManager : MonoBehaviour
             /*case "EnemyB":
                 targetPool = enemyB;
                 break;*/
-            case "EnemyL":
+            case "enemyL":
                 targetPool = enemyL;
                 break;
-            case "EnemyM":
+            case "enemyM":
                 targetPool = enemyM;
                 break;
-            case "EnemyS":
+            case "enemyS":
                 targetPool = enemyS;
                 break;
             case "itemSkill":
@@ -255,14 +285,17 @@ public class ObjectManager : MonoBehaviour
             case "itemHealth":
                 targetPool = itemHealth;
                 break;
-            case "BulletPlayerA":
+            case "bulletPlayerA":
                 targetPool = bulletPlayerA;
                 break;
-            case "BulletPlayerB":
+            case "bulletPlayerB":
                 targetPool = bulletPlayerB;
                 break;
             case "bulletFollower":
                 targetPool = bulletFollower;
+                break;
+            case "bulletChase":
+                targetPool = bulletChase;
                 break;
                 /*case "BulletEnemyA":
                     targetPool = bulletEnemyA;

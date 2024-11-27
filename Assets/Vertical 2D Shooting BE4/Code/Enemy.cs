@@ -24,12 +24,13 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
     }
     // 적 오브젝트가 활성화될 때 초기화 작업 수행
     void OnEnable()
     {
-        enemyLevel = gameManager.difference;
+        if (gameManager == null)
+            gameManager = FindObjectOfType<GameManager>();
+        enemyLevel = gameManager.difficulty;
         switch (enemyName)
         {
             case "L":
@@ -264,7 +265,7 @@ public class Enemy : MonoBehaviour
         // 매 FixedUpdate 마다 Move() 호출
         Skill();
         SkillReload();
-        enemyLevel = gameManager.difference;
+        enemyLevel = gameManager.difficulty;
     }
     public void OnHit(int dmg)
     {
@@ -280,43 +281,49 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Player playerLogic = player.GetComponent<Player>();
-            playerLogic.Exp += enemyExp;
-            int ran = Random.Range(0, 10);
-            if (ran < 3)
-            {
-                //Not Item 30%
-                Debug.Log("Not Item");
-            }
-            else if (ran < 6)
-            {
-                //Coin 30%
-                GameObject itemSkill = objectManager.MakeObj("itemSkill");
-                itemSkill.transform.position = transform.position;
-                Rigidbody2D rigid= itemSkill.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
-            }
-            else if (ran < 8)
-            {
-                //Power 20%
-                GameObject itemExp = objectManager.MakeObj("itemExp");
-                itemExp.transform.position = transform.position;
-                Rigidbody2D rigid = itemExp.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
-            }
-            else if (ran < 10)
-            {
-                //Boom 20%
-                GameObject itemHealth = objectManager.MakeObj("itemHealth");
-                itemHealth.transform.position = transform.position;
-                Rigidbody2D rigid = itemHealth.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
-            }
-            // 적 비활성화 및 초기화
+            gameManager.GetExp();
+            DropItem();
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
         }
     }
+    void DropItem()
+    {
+        int ran = Random.Range(0, 10);
+        GameObject item = null;
+
+        if (ran < 3)
+        {
+            Debug.Log("Not Item");
+        }
+        else if (ran < 6)
+        {
+            Debug.Log("Attempting to create itemSkill...");
+            item = objectManager.MakeObj("itemSkill");
+        }
+        else if (ran < 8)
+        {
+            Debug.Log("Attempting to create itemExp...");
+            item = objectManager.MakeObj("itemExp");
+        }
+        else if (ran < 10)
+        {
+            Debug.Log("Attempting to create itemHealth...");
+            item = objectManager.MakeObj("itemHealth");
+        }
+
+        if (item != null)
+        {
+            item.transform.position = transform.position;
+            Rigidbody2D rigid = item.GetComponent<Rigidbody2D>();
+            if (rigid != null)
+            {
+                rigid.velocity = Vector2.down * 1.5f;
+            }
+        }
+    }
+
+
     void Skill()
     {
         if (transform.position.y <= -5)
@@ -328,26 +335,11 @@ public class Enemy : MonoBehaviour
             switch (enemyLevel)
             {
                 case 1:
-                    GameObject bullet = objectManager.MakeObj("BulletEnemyA");
-                    bullet.transform.position = transform.position;
-                    Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-                    Vector3 dirVec = player.transform.position - transform.position;
-                    rigidbody.AddForce(dirVec.normalized * 10, ForceMode2D.Impulse);
+                    CreateBullet("bulletEnemyA", Vector3.zero);
                     break;
-                case 2:
-                    GameObject bulletR = objectManager.MakeObj("BulletEnemyB");
-                    bulletR.transform.position = transform.position + Vector3.right * 0.3f;
-                    GameObject bulletL = objectManager.MakeObj("BulletEnemyB");
-                    bulletL.transform.position = transform.position + Vector3.left * 0.3f;
-
-                    Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
-                    Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
-
-                    Vector3 dirVecR = player.transform.position - (transform.position + Vector3.right * 0.3f);
-                    Vector3 dirVecL = player.transform.position - (transform.position + Vector3.left * 0.3f);
-
-                    rigidR.AddForce(dirVecR.normalized * 10, ForceMode2D.Impulse);
-                    rigidL.AddForce(dirVecL.normalized * 10, ForceMode2D.Impulse);
+                default:
+                    CreateBullet("bulletEnemyA", Vector3.right * 0.1f);
+                    CreateBullet("bulletEnemyA", Vector3.left * 0.1f);
                     break;
             }
         }
@@ -355,31 +347,20 @@ public class Enemy : MonoBehaviour
         {
             switch (enemyLevel)
             {
-                case 1:
-                    GameObject bullet = objectManager.MakeObj("BulletEnemyA");
-                    bullet.transform.position = transform.position;
-                    Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-                    Vector3 dirVec = player.transform.position - transform.position;
-                    rigidbody.AddForce(dirVec.normalized * 10, ForceMode2D.Impulse);
-                    break;
-                case 2:
-                    GameObject bulletR = objectManager.MakeObj("BulletEnemyB");
-                    bulletR.transform.position = transform.position + Vector3.right * 0.3f;
-                    GameObject bulletL = objectManager.MakeObj("BulletEnemyB");
-                    bulletL.transform.position = transform.position + Vector3.left * 0.3f;
-
-                    Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
-                    Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
-
-                    Vector3 dirVecR = player.transform.position - (transform.position + Vector3.right * 0.3f);
-                    Vector3 dirVecL = player.transform.position - (transform.position + Vector3.left * 0.3f);
-
-                    rigidR.AddForce(dirVecR.normalized * 10, ForceMode2D.Impulse);
-                    rigidL.AddForce(dirVecL.normalized * 10, ForceMode2D.Impulse);
+                default:
+                    CreateBullet("bulletEnemyB", Vector3.right * 0.2f);
+                    CreateBullet("bulletEnemyB", Vector3.left * 0.2f);
                     break;
             }
         }
         curShotSpeed = 0;
+    }
+    void CreateBullet(string type, Vector3 offset)
+    {
+        GameObject bullet = objectManager.MakeObj(type);
+        Vector3 dirVec = player.transform.position - transform.position;
+        bullet.transform.position = transform.position + offset;
+        bullet.GetComponent<Rigidbody2D>().AddForce(dirVec.normalized * 10, ForceMode2D.Impulse);
     }
     void SkillReload()
     {
@@ -405,12 +386,14 @@ public class Enemy : MonoBehaviour
             if (bullet != null)
             {
                 OnHit(bullet.dmg); // 먼저 데미지를 적용하고 Health를 감소시킴
-                Debug.Log("hit");
                 // 체력이 0 이하일 경우 적을 비활성화
-                if (health <= 0)
+                if (bullet != null)
                 {
-                    gameObject.SetActive(false);
-                    transform.rotation = Quaternion.identity;
+                    OnHit(bullet.dmg);
+                }
+                else
+                {
+                    Debug.LogWarning("충돌한 오브젝트에 Bullet 컴포넌트가 없습니다.");
                 }
             }
         }

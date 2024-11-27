@@ -4,23 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.ComponentModel;
 
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public float nextSpawnDealy;
     public float curSpawnDelay;
 
     public float gameTime;
     public float maxGameTime;
 
-    public int difference;
-    public int maxdifference;
+    public int difficulty;
+    public int maxDifficulty;
 
     public string[] enemyObjs;
     public Transform[] spawnPoints;
-
     public Image[] skill5Image;
+
+    public int exp;
+    public int[] nextExp = { 3, 5, 10, 100, 150, 210, 280, 360, 450, 600 }; // 레벨업에 필요한 경험치 배열
+    public int level; // 현재 플레이어 레벨
 
     public GameObject player;
     public ObjectManager objectManager;
@@ -31,10 +36,10 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL"};
+        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS" };
         ReadSpawnFile();
-        UpdateSkill5Icon(0);
     }
     void Update()
     {
@@ -49,21 +54,10 @@ public class GameManager : MonoBehaviour
     void SetGameDifference()
     {
         gameTime += Time.deltaTime;
-        difference = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
-        if(difference > maxdifference)
+        difficulty = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
+        if(difficulty > maxDifficulty)
         {
-            difference = maxdifference;
-        }
-    }
-    public void UpdateSkill5Icon(int skill5stack)
-    {
-        for(int index=0;index<3;index++)
-        {
-            skill5Image[index].color= new Color(1,1,1, 0);
-        }
-        for (int index = 0; index < skill5stack; index++)
-        {
-            skill5Image[index].color = new Color(1, 1, 1, 1);
+            difficulty = maxDifficulty;
         }
     }
     void ReadSpawnFile()
@@ -96,13 +90,13 @@ public class GameManager : MonoBehaviour
         int enemyIndex = 0;
         switch(spawnList[spawnIndex].type)
         {
-            case "S":
+            case "L":
                 enemyIndex = 0;
                 break;
             case "M":
                 enemyIndex = 1;
                 break;
-            case "L":
+            case "S":
                 enemyIndex = 2;
                 break;
         }
@@ -136,5 +130,21 @@ public class GameManager : MonoBehaviour
             return;
         }
         nextSpawnDealy = spawnList[spawnIndex].delay;
+    }
+    // 경험치를 획득하고 레벨업 처리
+    public void GetExp()
+    {
+        /*if (!isLive) // 게임이 비활성화 상태면 동작하지 않음
+            return;*/
+
+        exp++; // 경험치 증가
+
+        // 경험치가 다음 레벨업 요구치를 충족하면 레벨업 처리
+        if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
+        {
+            level++; // 레벨 증가
+            exp = 0; // 경험치 초기화
+            //uiLevelUp.Show(); // 레벨업 UI 표시
+        }
     }
 }

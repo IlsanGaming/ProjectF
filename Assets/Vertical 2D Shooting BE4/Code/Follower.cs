@@ -49,7 +49,7 @@ public class Follower : MonoBehaviour
             return;
 
         // 총알 생성 및 발사
-        GameObject bullet = objectManager.MakeObj("BulletFollower");
+        GameObject bullet = objectManager.MakeObj("bulletFollower");
         bullet.transform.position = transform.position;
 
         Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
