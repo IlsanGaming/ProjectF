@@ -2389,7 +2389,7 @@ MonoBehaviour:
   curVerticalBulletSpeed: 10
   maxVerticalBulletSpeed: 20
   curCharge: 0
-  maxCharge: 4
+  maxCharge: 10
   curShotSpeed: 0
   maxShotSpeed: 0.2
   lightness: 10

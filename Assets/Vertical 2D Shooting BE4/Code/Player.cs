@@ -279,7 +279,7 @@ public class Player : MonoBehaviour
         GameObject bullet = objectManager.MakeObj(type);
         bullet.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         bullet.transform.position = transform.position + offset;
-        bullet.GetComponent<Rigidbody2D>().AddForce(dir * 20, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(dir * curVerticalBulletSpeed*1.2f, ForceMode2D.Impulse);
     }
     void Skill5()
     {
