@@ -221,8 +221,11 @@ MonoBehaviour:
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
-  enemyExp: 4
+  enemyExp: 5
   enemyLevel: 0
   player: {fileID: 0}
   objectManager: {fileID: 0}
   gameManager: {fileID: 0}
+  patternIndex: 0
+  curPatternCount: 0
+  maxPatternCount: 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6889050200373171323}
   - component: {fileID: 2664450336017830276}
   m_Layer: 0
-  m_Name: Exp
+  m_Name: exp
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

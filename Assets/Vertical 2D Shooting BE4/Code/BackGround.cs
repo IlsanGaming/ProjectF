@@ -18,6 +18,10 @@ public class BackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
         Vector3 curPos = transform.position;
         Vector3 nextPos = Vector3.down * speed * Time.deltaTime;
         transform.position = curPos + nextPos;

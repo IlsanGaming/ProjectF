@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
     public int skill3Level;
     public int skill4Level;
     public int skill5Stack;
+    public int PspeedLevel;
+    public int BspeedLevel;
+    public int AspeedLevel;
+    public int WeightLevel;
+
 
 
     public int maxskill1Level;
@@ -22,12 +27,20 @@ public class Player : MonoBehaviour
     public int maxskill3Level;
     public int maxskill4Level;
     public int maxskill5Stack;
+    public int maxPspeedLevel;
+    public int maxBspeedLevel;
+    public int maxAspeedLevel;
+    public int maxWeightLevel;
+
+    public float speed;//이동속도
+    public float maxSpeed;
+
+
 
     public float health;
     public float maxhealth;
-    public float speed;//이동속도  
+     
     public float curVerticalBulletSpeed;//투사체 속도
-    public float maxVerticalBulletSpeed;//최대 투사체 속도
     public float curCharge;//충전 속도
     public float maxCharge;//최대 충전 속도
     public float curShotSpeed;//장전속도
@@ -42,6 +55,8 @@ public class Player : MonoBehaviour
     public bool isTouchLeft;
 
     public bool isSkill5;
+
+    public bool isSkillControl;
 
     public GameManager gameManager;
     public ObjectManager objectManager;
@@ -63,6 +78,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
         // 매 FixedUpdate 마다 Move() 호출
         Move();
         Skill1();
@@ -72,6 +91,105 @@ public class Player : MonoBehaviour
         Skill4();
         Skill4Charge();
         Skill5();
+    }
+    void LateUpdate()
+    {
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
+        SetPspeed();
+        SetBspeed();
+        SetAspeed();
+        SetWeight();
+    }
+    void SetPspeed()
+    {
+        switch(PspeedLevel)
+        {
+            case 0:
+                speed = 5f;
+                break;
+            case 1:
+                speed = 5.4f;
+                break;
+            case 2:
+                speed = 5.8f;
+                break;
+            case 3:
+                speed = 6.2f;
+                break;
+            case 4:
+                speed = 6.6f;
+                break;
+        }
+    }
+    void SetBspeed()
+    {
+        switch (BspeedLevel)
+        {
+            case 0:
+                curVerticalBulletSpeed = 10f;
+                break;
+            case 1:
+                curVerticalBulletSpeed = 14f;
+                break;
+            case 2:
+                curVerticalBulletSpeed = 18f;
+                break;
+            case 3:
+                curVerticalBulletSpeed = 22f;
+                break;
+            case 4:
+                curVerticalBulletSpeed = 26f;
+                break;
+        }
+    }
+    void SetAspeed()
+    {
+        switch (AspeedLevel)
+        {
+            case 0:
+                maxShotSpeed = 1.4f;
+                break;
+            case 1:
+                maxShotSpeed = 1.1f;
+                break;
+            case 2:
+                maxShotSpeed = 0.8f;
+                break;
+            case 3:
+                maxShotSpeed = 0.5f;
+                break;
+            case 4:
+                maxShotSpeed = 0.3f;
+                break;
+        }                
+    }
+    void SetWeight()
+    {
+        switch (WeightLevel)
+        {
+            case 0:
+                lightness = 15f;
+                break;
+            case 1:
+                lightness = 14f;
+                break;
+            case 2:
+                lightness = 13f;
+                break;
+            case 3:
+                lightness = 12f;
+                break;
+            case 4:
+                lightness = 11f;
+                break;
+        }
+    }
+    public void HealthCharge()
+    {
+        health=maxhealth;
     }
 
     void Move()
@@ -96,27 +214,27 @@ public class Player : MonoBehaviour
 
         switch (skill1Level)
         {
-            case 1:
+            case 0:
                 CreateSkill1("bulletPlayerA", Vector3.zero, new Color(255, 228, 0)); // 기본 색상
                 break;
-            case 2:
+            case 1:
                 CreateSkill1("bulletPlayerA", Vector3.right * 0.1f, new Color(29, 219, 22));
                 CreateSkill1("bulletPlayerA", Vector3.left * 0.1f, new Color(29, 219, 22));
                 break;
-            case 3:
+            case 2:
                 CreateSkill1("bulletPlayerB", Vector3.zero, new Color(255, 94, 0));
                 break;
-            case 4:
+            case 3:
                 CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(95, 0, 255));
                 CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(95, 0, 255));
                 break;
-            case 5:
+            case 4:
                 CreateSkill1("bulletPlayerA", new Vector3(0.65f, -0.25f, 0f), new Color(189, 189, 189));
                 CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(189, 189, 189));
                 CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(189, 189, 189));
                 CreateSkill1("bulletPlayerA", new Vector3(-0.65f, -0.25f, 0f), new Color(189, 189, 189));
                 break;
-            case 6:
+            case 5:
                 CreateSkill1("bulletPlayerA", new Vector3(0.65f, -0.25f, 0f), new Color(255, 187, 0));
                 CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(255, 187, 0));
                 CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(255, 187, 0));
@@ -124,7 +242,7 @@ public class Player : MonoBehaviour
                 CreateSkill1("bulletPlayerA", new Vector3(-0.25f, -0.65f, 0f), new Color(255, 187, 0));
                 CreateSkill1("bulletPlayerA", new Vector3(0.25f, -0.65f, 0f), new Color(255, 187, 0));
                 break;
-            case 7:
+            case 6:
                 CreateSkill1("bulletPlayerB", Vector3.right * 0.25f, new Color(255, 0, 127));
                 CreateSkill1("bulletPlayerB", Vector3.left * 0.25f, new Color(255, 0, 127));
                 CreateSkill1("bulletPlayerB", new Vector3(-0.65f, -0.5f, 0f), new Color(255, 0, 127));
@@ -281,9 +399,13 @@ public class Player : MonoBehaviour
         bullet.transform.position = transform.position + offset;
         bullet.GetComponent<Rigidbody2D>().AddForce(dir * curVerticalBulletSpeed*1.2f, ForceMode2D.Impulse);
     }
+    public void ButtonSkillDown()
+    {
+        isSkillControl = true;
+    }
     void Skill5()
     {
-        if (!Input.GetButton("Fire2"))
+        if (!isSkillControl)
             return;
         if(isSkill5)
             return;

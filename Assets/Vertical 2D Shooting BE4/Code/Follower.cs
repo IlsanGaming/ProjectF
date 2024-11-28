@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class Follower : MonoBehaviour
@@ -17,6 +18,10 @@ public class Follower : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
         RotateAroundPlayer(); // 플레이어 주위를 회전
         Fire();   // 총알 발사
         Reload(); // 발사 딜레이 갱신

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3339558691534060995}
   - component: {fileID: -7669260381778317936}
   m_Layer: 0
-  m_Name: ChaseBullet
+  m_Name: chaseBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,3 +172,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 5
+  isRotate: 0

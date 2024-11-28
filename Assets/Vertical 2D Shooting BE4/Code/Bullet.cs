@@ -6,6 +6,14 @@ public class Bullet : MonoBehaviour
 {
     public int dmg;
     SpriteRenderer spriteRenderer;
+
+    public bool isRotate;
+
+    void Update()
+    {
+        if (isRotate)
+            transform.Rotate(Vector3.forward * 10);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag=="Borderbullet")

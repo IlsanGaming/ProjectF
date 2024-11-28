@@ -9,7 +9,15 @@ using System.ComponentModel;
 
 public class GameManager : MonoBehaviour
 {
+    public int stage;
+    public bool storyClear;
+
+    public Animator startAnim;
+    public Animator endAnim;
+    public Animator fadeAnim;
     public static GameManager instance;
+
+    public bool isLive;
     public float nextSpawnDealy;
     public float curSpawnDelay;
 
@@ -29,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public ObjectManager objectManager;
+    public LevelUp uiLevelUp;
+    public SButton sbt;
 
     public List<Spawn> spawnList;
     public int spawnIndex;
@@ -38,11 +48,33 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS" };
+        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS","enemyB" };
+        StageStart();
+    }
+    public void StageStart()
+    {
+        startAnim.SetTrigger("On");
         ReadSpawnFile();
+        fadeAnim.SetTrigger("In");
+    }
+    public void StageEnd()
+    {
+        endAnim.SetTrigger("");
+        fadeAnim.SetTrigger("Out");
+        Player.instance.transform.position = new Vector3(0, -3.5f, 0);
+        Invoke("BackIntro", 7f);
+    }
+    public void BackIntro()
+    {
+        SButton.instance.isOpen = true;
+        SceneManager.LoadScene(0);
     }
     void Update()
     {
+        if (!isLive)
+        {
+            return;
+        }
         curSpawnDelay += Time.deltaTime;
         if(curSpawnDelay > nextSpawnDealy &&!spawnEnd)
         {
@@ -66,7 +98,7 @@ public class GameManager : MonoBehaviour
         spawnIndex = 0;
         spawnEnd = false;
 
-        TextAsset textFile=Resources.Load("Stage0") as TextAsset;
+        TextAsset textFile=Resources.Load("Stage"+stage) as TextAsset;
         StringReader stringReader = new StringReader(textFile.text);
 
         while (stringReader != null)
@@ -98,6 +130,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "S":
                 enemyIndex = 2;
+                break;
+            case "B":
+                enemyIndex = 3; // 보스
                 break;
         }
         int enemyPoint = spawnList[spawnIndex].point;
@@ -131,11 +166,19 @@ public class GameManager : MonoBehaviour
         }
         nextSpawnDealy = spawnList[spawnIndex].delay;
     }
+    // 폭발 효과를 호출하는 함수
+    public void CallExplosion(Vector3 pos, string type)
+    {
+        GameObject explosion = objectManager.MakeObj("explosion");
+        Explosion explosionLogic = explosion.GetComponent<Explosion>();
+        explosion.transform.position = pos;
+        explosionLogic.StartExplosion(type); // 폭발 애니메이션 시작
+    }
     // 경험치를 획득하고 레벨업 처리
     public void GetExp()
     {
-        /*if (!isLive) // 게임이 비활성화 상태면 동작하지 않음
-            return;*/
+        if (!isLive) // 게임이 비활성화 상태면 동작하지 않음
+            return;
 
         exp++; // 경험치 증가
 
@@ -144,7 +187,17 @@ public class GameManager : MonoBehaviour
         {
             level++; // 레벨 증가
             exp = 0; // 경험치 초기화
-            //uiLevelUp.Show(); // 레벨업 UI 표시
+            uiLevelUp.Show(); // 레벨업 UI 표시
         }
+    }
+    public void Stop()
+    {
+        isLive=false;
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        isLive = true;
+        Time.timeScale = 1;
     }
 }

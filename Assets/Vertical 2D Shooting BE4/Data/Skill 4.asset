@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2398b5956ef1cb64ba5fd22bd34fef49, type: 3}
   m_Name: Skill 4
   m_EditorClassIdentifier: 
-  skillType: 4
-  skillId: 4
-  skillName: "\uC2E0\uC18D"
-  skillDesc: "\uB0A0\uAC2F\uC9D3\uC774 \uAC00\uBCBC\uC6CC\uC838, \uC774\uB3D9\uC18D\uB3C4\uAC00
-    \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  skillIcon: {fileID: 563336626, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillType: 3
+  skillId: 3
+  skillName: "\uC0D8\uC19F\uB294 \uC0DD\uBA85\uB825"
+  skillDesc: "10\uCD08\uC5D0 \uD55C\uBC88, \uCD5C\uB300\uCCB4\uB825\uC758 \n\uC77C\uBD80\uB97C
+    \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  skillIcon: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   grade:
   - "\uD76C\uBBF8\uD55C"
   - "\uBE5B\uB098\uB294"
@@ -25,4 +25,3 @@ MonoBehaviour:
   - "\uACE0\uADC0\uD55C"
   - "\uC22D\uACE0\uD55C"
   - "\uC644\uC804\uD55C"
-  - "\uC804\uC124\uC801\uC778"

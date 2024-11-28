@@ -11,6 +11,7 @@ public class SkillData : ScriptableObject
     public SkillType skillType;
     public int skillId;
     public string skillName;
+    [TextArea]
     public string skillDesc;
     public Sprite skillIcon;
     public string[] grade = { "희미한", "빛나는", "찬란한", "고귀한", "숭고한", "완전한", "전설적인" };

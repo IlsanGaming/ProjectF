@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2398b5956ef1cb64ba5fd22bd34fef49, type: 3}
   m_Name: Skill 1
   m_EditorClassIdentifier: 
-  skillType: 1
-  skillId: 1
-  skillName: "\uC5D8\uB9AC\uC2DC\uC544\uC758 \uD608\uD1B5"
-  skillDesc: "\uC218\uD638\uC790\uB4E4\uC774 \uC131\uC2A4\uB7EC\uC6B4 \uADA4\uB3C4\uB97C
-    \uB530\uB77C \uACF5\uACA9\uD569\uB2C8\uB2E4."
-  skillIcon: {fileID: -1786786079, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillType: 0
+  skillId: 0
+  skillName: "\uB9C8\uB825 \uD3ED\uD48D"
+  skillDesc: "\uC8FC\uC778\uACF5\uC774 \uB0A0\uAC1C\uB97C \uD06C\uAC8C \n\uD3BC\uCCD0
+    \uC801\uC744 \uC4F8\uC5B4\uBC84\uB9BD\uB2C8\uB2E4."
+  skillIcon: {fileID: -181907988, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   grade:
   - "\uD76C\uBBF8\uD55C"
   - "\uBE5B\uB098\uB294"
