@@ -111,16 +111,16 @@ public class Player : MonoBehaviour
                 speed = 5f;
                 break;
             case 1:
-                speed = 5.4f;
+                speed = 5.2f;
                 break;
             case 2:
-                speed = 5.8f;
+                speed = 5.6f;
                 break;
             case 3:
-                speed = 6.2f;
+                speed = 6.4f;
                 break;
             case 4:
-                speed = 6.6f;
+                speed = 8f;
                 break;
         }
     }
@@ -132,16 +132,16 @@ public class Player : MonoBehaviour
                 curVerticalBulletSpeed = 10f;
                 break;
             case 1:
-                curVerticalBulletSpeed = 14f;
+                curVerticalBulletSpeed = 11f;
                 break;
             case 2:
-                curVerticalBulletSpeed = 18f;
+                curVerticalBulletSpeed = 12f;
                 break;
             case 3:
-                curVerticalBulletSpeed = 22f;
+                curVerticalBulletSpeed = 14f;
                 break;
             case 4:
-                curVerticalBulletSpeed = 26f;
+                curVerticalBulletSpeed = 16f;
                 break;
         }
     }
@@ -150,19 +150,19 @@ public class Player : MonoBehaviour
         switch (AspeedLevel)
         {
             case 0:
-                maxShotSpeed = 1.4f;
+                maxShotSpeed = 1f;
                 break;
             case 1:
-                maxShotSpeed = 1.1f;
+                maxShotSpeed = 0.92f;
                 break;
             case 2:
-                maxShotSpeed = 0.8f;
+                maxShotSpeed = 0.78f;
                 break;
             case 3:
-                maxShotSpeed = 0.5f;
+                maxShotSpeed = 0.6f;
                 break;
             case 4:
-                maxShotSpeed = 0.3f;
+                maxShotSpeed = 0.36f;
                 break;
         }                
     }
@@ -174,16 +174,16 @@ public class Player : MonoBehaviour
                 lightness = 15f;
                 break;
             case 1:
-                lightness = 14f;
+                lightness = 14.5f;
                 break;
             case 2:
-                lightness = 13f;
+                lightness = 12.7f;
                 break;
             case 3:
-                lightness = 12f;
+                lightness = 11.5f;
                 break;
             case 4:
-                lightness = 11f;
+                lightness = 10f;
                 break;
         }
     }
@@ -419,7 +419,7 @@ public class Player : MonoBehaviour
         for (int index = 0; index < enemies.Length; index++)
         {
             Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-            enemyLogic.OnHit(1000);
+            enemyLogic.OnHit(10000000);
         }
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
         for (int index = 0; index < bullets.Length; index++)
@@ -446,6 +446,8 @@ public class Player : MonoBehaviour
         // 적 총알 제거
         RemoveBullets("BulletEnemyA");
         RemoveBullets("BulletEnemyB");
+        RemoveBullets("bulletBossA");
+        RemoveBullets("bulletBossB");
     }
     // 적 총알 제거 처리 함수
     void RemoveBullets(string type)
@@ -489,12 +491,23 @@ public class Player : MonoBehaviour
                 for (int i = 0; i < 5; i++)
                 {
                     gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
+                    gameManager.GetExp();
                 }
                 break;
 
             case "Boom":
                 if (skill5Stack == maxskill5Stack)
                 {
+                    gameManager.GetExp();
+                    gameManager.GetExp();
                     gameManager.GetExp();
                     Debug.Log("Skill5 Stack Full: Extra Experience Gained");
                 }
@@ -509,7 +522,6 @@ public class Player : MonoBehaviour
                 Debug.LogWarning($"Unknown item type: {item.type}");
                 break;
         }
-
         // 아이템을 비활성화하고 풀로 반환
         item.gameObject.SetActive(false);
     }
@@ -532,14 +544,13 @@ public class Player : MonoBehaviour
         StartCoroutine(KnockBack(dirVector));
 
         // 체력 감소
-        health -= 2;
+        health -= 1.48f;
 
         // 체력이 0보다 작아질 경우 게임 오버 처리
         if (health <= 0)
         {
-            Debug.Log("GameOver!");
-            gameObject.SetActive(false);
-            Time.timeScale = 0; // 게임 시간 정지
+            StageClear();
+            gameManager.StageLose();
         }
     }
     IEnumerator KnockBack(Vector3 direction)
@@ -576,6 +587,21 @@ public class Player : MonoBehaviour
         {
             SetBorderTouch(collision.gameObject.name, false);
             rigid.constraints = RigidbodyConstraints2D.None;
+        }
+    }
+    public void StageClear()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
+            enemyLogic.transform.localScale= Vector3.zero;
+        }
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int index = 0; index < bullets.Length; index++)
+        {
+            Bullet bulletLogic = bullets[index].GetComponent<Bullet>();
+            bulletLogic.transform.localScale= Vector3.zero;
         }
     }
 }

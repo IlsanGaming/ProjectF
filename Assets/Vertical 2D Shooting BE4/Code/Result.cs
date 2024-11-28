@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Result : MonoBehaviour
 {
@@ -13,5 +14,10 @@ public class Result : MonoBehaviour
     public void Win()
     {
         titles[1].SetActive(true);
+    }
+    public void BackToMain()
+    {
+        SceneManager.LoadScene(0);
+        Enemy.instance.isClear = true;
     }
 }

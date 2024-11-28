@@ -62,10 +62,10 @@ public class ObjectManager : MonoBehaviour
         bulletPlayerA = new GameObject[100];
         bulletPlayerB = new GameObject[100];
         bulletEnemyA = new GameObject[100];
-        bulletEnemyB = new GameObject[100];
+        bulletEnemyB = new GameObject[500];
         bulletFollower = new GameObject[100];
         bulletChase = new GameObject[100];
-        bulletBossA = new GameObject[50];
+        bulletBossA = new GameObject[500];
         bulletBossB = new GameObject[500];
 
         explosion = new GameObject[50];
@@ -219,43 +219,21 @@ public class ObjectManager : MonoBehaviour
             case "explosion":
                 targetPool = explosion;
                 break;
-            
             default:
                 Debug.LogError($"'{type}'에 해당하는 오브젝트 풀을 찾을 수 없습니다.");
                 return null;
         }
-
-        // 사용 가능한 비활성화된 오브젝트 찾기
-        foreach (var obj in targetPool)
+        // 비활성화된 오브젝트를 찾아 활성화 후 반환
+        for (int index = 0; index < targetPool.Length; index++)
         {
-            if (obj != null && !obj.activeSelf)
+            if (targetPool[index] != null && !targetPool[index].activeSelf)
             {
-                obj.SetActive(true);
-                return obj;
+                targetPool[index].SetActive(true);
+                return targetPool[index];
             }
         }
-
-        // 새로 생성 시도
-        Debug.LogWarning($"'{type}' 오브젝트 풀이 비어 있습니다. 새로 생성을 시도합니다.");
-        GameObject prefab = null;
-
-        if (prefab == null)
-        {
-            Debug.LogError($"'{type}' 프리팹이 설정되지 않았습니다.");
-            return null;
-        }
-
-        GameObject newObj = Instantiate(prefab);
-        if (newObj != null)
-        {
-            newObj.SetActive(false);
-            return newObj;
-        }
-        else
-        {
-            Debug.LogError($"'{type}' 오브젝트 생성에 실패했습니다.");
-            return null;
-        }
+        Debug.LogWarning($"'{type}' 풀에서 사용할 수 있는 오브젝트가 없습니다.");
+        return null;
     }
 
     // GetPool: 특정 타입의 오브젝트 풀 배열을 반환

@@ -16,8 +16,9 @@ public class GameManager : MonoBehaviour
     public Animator endAnim;
     public Animator startFadeAnim;
     public Animator endFadeAnim;
+    public Animator endButton;
+    public Animator endButtonText;
     public static GameManager instance;
-
     public bool isLive;
     public float nextSpawnDealy;
     public float curSpawnDelay;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS","enemyB" };
+        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB" };
         StageStart();
     }
     public void StageStart()
@@ -65,19 +66,48 @@ public class GameManager : MonoBehaviour
         startIntro.SetActive(true);
         startAnim.SetTrigger("On");
         startFadeAnim.SetTrigger("In");
+        yield return new WaitForSeconds(6f);
+        startIntro.SetActive(false);
     }
-    public void StageEnd()
+    void HideIntro()
+    {
+        startIntro.SetActive(false);
+    }
+    public void StageWin()
     {
         isLive = false;
-        StartCoroutine(EndAnimation());
+        StartCoroutine(WinResult());
         Player.instance.transform.position = new Vector3(0, -3.5f, 0);
-        player.gameObject.transform.localScale=Vector3.zero;
+        player.gameObject.transform.localScale = Vector3.zero;
     }
-    IEnumerator EndAnimation()
+    IEnumerator WinResult()
     {
         yield return new WaitForSeconds(.01f);
         endIntro.SetActive(true);
         endFadeAnim.SetTrigger("Out");
+        uiResult.Win();
+        yield return new WaitForSeconds(.5f);
+        endButton.SetTrigger("On");
+        endButtonText.SetTrigger("On");
+        yield return new WaitForSeconds(1.1f);
+        Stop();
+    }
+    public void StageLose()
+    {
+        isLive = false;
+        StartCoroutine(LoseResult());
+        Player.instance.transform.position = new Vector3(0, -3.5f, 0);
+        player.gameObject.transform.localScale = Vector3.zero;
+    }
+    IEnumerator LoseResult()
+    {
+        yield return new WaitForSeconds(.01f);
+        endIntro.SetActive(true);
+        endFadeAnim.SetTrigger("Out");
+        uiResult.Lose();
+        yield return new WaitForSeconds(.5f);
+        endButton.SetTrigger("On");
+        endButtonText.SetTrigger("On");
         yield return new WaitForSeconds(1.1f);
         Stop();
     }
@@ -88,7 +118,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         curSpawnDelay += Time.deltaTime;
-        if(curSpawnDelay > nextSpawnDealy &&!spawnEnd)
+        if (curSpawnDelay > nextSpawnDealy && !spawnEnd)
         {
             SpawnEnemy();
             curSpawnDelay = 0;
@@ -99,10 +129,18 @@ public class GameManager : MonoBehaviour
     {
         gameTime += Time.deltaTime;
         difficulty = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
-        if(difficulty > maxDifficulty)
+        if (difficulty > maxDifficulty)
         {
             difficulty = maxDifficulty;
         }
+    }
+    public void NextStage()
+    {
+
+    }
+    public void StageEnd()
+    {
+
     }
     void ReadSpawnFile()
     {
@@ -110,12 +148,12 @@ public class GameManager : MonoBehaviour
         spawnIndex = 0;
         spawnEnd = false;
 
-        TextAsset textFile=Resources.Load("Stage"+stage) as TextAsset;
+        TextAsset textFile = Resources.Load("Stage" + stage) as TextAsset;
         StringReader stringReader = new StringReader(textFile.text);
 
         while (stringReader != null)
         {
-            string line=stringReader.ReadLine();
+            string line = stringReader.ReadLine();
             Debug.Log(line);
             if (line == null)
                 break;
@@ -132,7 +170,7 @@ public class GameManager : MonoBehaviour
     void SpawnEnemy()
     {
         int enemyIndex = 0;
-        switch(spawnList[spawnIndex].type)
+        switch (spawnList[spawnIndex].type)
         {
             case "L":
                 enemyIndex = 0;
@@ -155,25 +193,25 @@ public class GameManager : MonoBehaviour
         enemyLogic.player = player;
         enemyLogic.gameManager = this;
         enemyLogic.objectManager = objectManager;
-        if (enemyPoint == 5||enemyPoint ==6)
+        if (enemyPoint == 5 || enemyPoint == 6)
         {
             enemy.transform.Rotate(Vector3.forward * 90);
-            rigid.velocity = new Vector2(enemyLogic.speed ,-0.5f);
+            rigid.velocity = new Vector2(enemyLogic.speed, -0.5f);
         }
-        else if(enemyPoint ==7||enemyPoint ==8)
+        else if (enemyPoint == 7 || enemyPoint == 8)
         {
             enemy.transform.Rotate(Vector3.back * 90);
             rigid.velocity = new Vector2(enemyLogic.speed * (-1), -0.5f);
         }
         else
         {
-            rigid.velocity = new Vector2(0,enemyLogic.speed*(-1));
+            rigid.velocity = new Vector2(0, enemyLogic.speed * (-1));
         }
 
         spawnIndex++;
-        if(spawnIndex==spawnList.Count)
+        if (spawnIndex == spawnList.Count)
         {
-            spawnEnd=true;
+            spawnEnd = true;
             return;
         }
         nextSpawnDealy = spawnList[spawnIndex].delay;
@@ -204,7 +242,7 @@ public class GameManager : MonoBehaviour
     }
     public void Stop()
     {
-        isLive=false;
+        isLive = false;
         Time.timeScale = 0;
     }
     public void Resume()

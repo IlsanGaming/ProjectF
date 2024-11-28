@@ -69,7 +69,7 @@ public class HUD : MonoBehaviour
                 }
                 break;
             case InfoType.Skill:
-                myText.text = string.Format("X : {0:F0}", Player.instance.skill5Stack); // 현재 처치 수 표시
+                myText.text = string.Format("X : {0:F0}", Player.instance.skill5Stack); 
                 break;
             case InfoType.level:
                 // 레벨 텍스트 업데이트

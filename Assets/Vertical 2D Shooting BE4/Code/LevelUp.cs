@@ -17,6 +17,7 @@ public class LevelUp : MonoBehaviour
     {
         Next();
         rect.localScale= Vector3.one;
+        Player.instance.boomEffect.SetActive(false);
         GameManager.instance.Stop();
     }
     public void Hide()
@@ -82,6 +83,4 @@ public class LevelUp : MonoBehaviour
             }
         }
     }
-
-
 }

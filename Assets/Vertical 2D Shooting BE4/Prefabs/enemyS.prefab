@@ -163,45 +163,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDatas:
   - health: 10
-    maxShotSpeed: 1.4
+    maxShotSpeed: 1
     speed: 5
-    enemyExp: 1
-  - health: 11
-    maxShotSpeed: 1.3
+    enemyExp: 2
+  - health: 10
+    maxShotSpeed: 1
+    speed: 5.5
+    enemyExp: 2
+  - health: 10
+    maxShotSpeed: 0.9
     speed: 6
     enemyExp: 2
-  - health: 12
-    maxShotSpeed: 1.2
-    speed: 7
-    enemyExp: 3
-  - health: 13
-    maxShotSpeed: 1.1
-    speed: 8
-    enemyExp: 4
-  - health: 14
-    maxShotSpeed: 1
-    speed: 9
-    enemyExp: 5
-  - health: 15
+  - health: 10
     maxShotSpeed: 0.9
-    speed: 10
-    enemyExp: 6
-  - health: 16
+    speed: 6
+    enemyExp: 2
+  - health: 10
     maxShotSpeed: 0.8
-    speed: 11
-    enemyExp: 7
-  - health: 17
+    speed: 7
+    enemyExp: 2
+  - health: 15
+    maxShotSpeed: 0.8
+    speed: 8
+    enemyExp: 2
+  - health: 15
     maxShotSpeed: 0.7
-    speed: 12
-    enemyExp: 8
-  - health: 18
+    speed: 8
+    enemyExp: 2
+  - health: 15
+    maxShotSpeed: 0.7
+    speed: 8
+    enemyExp: 2
+  - health: 20
     maxShotSpeed: 0.6
-    speed: 13
-    enemyExp: 9
-  - health: 19
-    maxShotSpeed: 0.5
-    speed: 14
-    enemyExp: 10
+    speed: 8
+    enemyExp: 2
+  - health: 25
+    maxShotSpeed: 0.6
+    speed: 8
+    enemyExp: 2
   enemyName: S
   speed: 3
   health: 10
@@ -213,6 +213,7 @@ MonoBehaviour:
   enemyBulletSpeed: 10
   enemyExp: 1
   enemyLevel: 0
+  isClear: 0
   player: {fileID: 0}
   objectManager: {fileID: 0}
   gameManager: {fileID: 0}

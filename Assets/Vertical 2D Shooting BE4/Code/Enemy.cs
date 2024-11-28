@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
+using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour
 {
+    public static Enemy instance;
     public LevelData[] levelDatas;
     public string enemyName;
     public float speed;//이동속도
@@ -14,6 +16,8 @@ public class Enemy : MonoBehaviour
     public float enemyBulletSpeed;//적 투사체 속도
     public int enemyExp;
     public int enemyLevel;
+
+    public bool isClear; 
 
     public GameObject player;
 
@@ -31,6 +35,7 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
 
@@ -272,8 +277,8 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case "B":
-                health = 10;
-                Invoke("Stop", 2.5f);
+                health = 1000;
+                Invoke("Stop", 1.6f);
                 break;
 
         }
@@ -282,6 +287,7 @@ public class Enemy : MonoBehaviour
     // 보스 적을 멈추게 하는 함수
     void Stop()
     {
+        Debug.Log("Stop실행완료");
         if (!gameObject.activeSelf) return;
 
         // Rigidbody2D를 이용해 적의 속도를 0으로 설정
@@ -289,16 +295,21 @@ public class Enemy : MonoBehaviour
         rigid.velocity = Vector2.zero;
 
         // 패턴 전환을 위한 Think 함수 호출
-        Invoke("Think", 2);
+        Invoke("Think", 2.5f);
     }
 
     // 다음 공격 패턴을 결정하는 함수
     void Think()
     {
+        Debug.Log("Think실행완료");
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
         // 패턴 인덱스 순환 (0~3)
         patternIndex = patternIndex == 3 ? 0 : patternIndex + 1;
         curPatternCount = 0; // 현재 패턴 카운트를 초기화
-
+        Debug.Log("Think실행완료2");
         // 패턴에 따라 다른 공격 수행
         switch (patternIndex)
         {
@@ -315,6 +326,7 @@ public class Enemy : MonoBehaviour
                 FireAround(); // 원형 발사
                 break;
         }
+        Debug.Log("Think실행완료3");
     }
 
     // 직선 발사 패턴
@@ -325,13 +337,13 @@ public class Enemy : MonoBehaviour
         Debug.Log("앞으로 4발 발사.");
         // 적의 위치를 기준으로 좌우에 총알 생성
         GameObject bulletR = objectManager.MakeObj("bulletBossA");
-        bulletR.transform.position = transform.position + Vector3.right * 0.3f;
+        bulletR.transform.position = transform.position + Vector3.right * 0.4f;
         GameObject bulletRR = objectManager.MakeObj("bulletBossA");
-        bulletRR.transform.position = transform.position + Vector3.right * 0.45f;
+        bulletRR.transform.position = transform.position + Vector3.right * 1.2f;
         GameObject bulletL = objectManager.MakeObj("bulletBossA");
-        bulletL.transform.position = transform.position + Vector3.left * 0.3f;
+        bulletL.transform.position = transform.position + Vector3.left * 0.4f;
         GameObject bulletLL = objectManager.MakeObj("bulletBossA");
-        bulletLL.transform.position = transform.position + Vector3.left * 0.45f;
+        bulletLL.transform.position = transform.position + Vector3.left * 1.2f;
 
         // 생성된 총알에 힘을 가해 아래 방향으로 이동
         Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
@@ -406,25 +418,24 @@ public class Enemy : MonoBehaviour
     void FireAround()
     {
         if (health <= 0) return;
-
-        Debug.Log("원 형태로 전체 공격");
         int roundNum = curPatternCount % 2 == 0 ? 50 : 40; // 발사체 수 변경
-        for (int index = 0; index < roundNum; index++)
-        {
-            GameObject bullet = objectManager.MakeObj("bulletEnemyA");
-            bullet.transform.position = transform.position;
-
-            Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-            // 원형으로 발사체 방향 계산
-            Vector3 dirVec = new Vector2(Mathf.Cos(Mathf.PI * 2 * index / roundNum), Mathf.Sin(Mathf.PI * 2 * index / roundNum));
-            rigidbody.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
-        }
-
+        CreateAround("bulletEnemyB");
         curPatternCount++;
         if (curPatternCount < maxPatternCount[patternIndex])
             Invoke("FireAround", 0.7f);
         else
             Invoke("Think", 3);
+    }
+    void CreateAround(string type)
+    {
+        int roundNum = curPatternCount % 2 == 0 ? 50 : 40; // 발사체 수 변경
+        for (int index = 0; index < roundNum; index++)
+        {
+            GameObject bullet = objectManager.MakeObj(type);
+            bullet.transform.position = transform.position;
+            Vector3 dirVec = new Vector2(Mathf.Cos(Mathf.PI * 2 * index / roundNum), Mathf.Sin(Mathf.PI * 2 * index / roundNum));
+            bullet.GetComponent<Rigidbody2D>().AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
+        }
     }
     void Update()
     {
@@ -470,10 +481,15 @@ public class Enemy : MonoBehaviour
             // 보스 적을 처치한 경우 스테이지 종료 처리
             if (enemyName == "B")
             {
-                gameManager.StageEnd();
-                gameManager.storyClear = true;
+                Invoke("Clear", 5f);
             }
         }
+    }
+    void Clear()
+    {
+        isClear = true;
+        gameManager.StageWin();
+        gameManager.storyClear = true;
     }
     void DropItem()
     {
@@ -573,6 +589,7 @@ public class Enemy : MonoBehaviour
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             if (bullet != null)
             {
+                collision.gameObject.SetActive(false);
                 OnHit(bullet.dmg); // 먼저 데미지를 적용하고 Health를 감소시킴
 
                 // 체력이 0 이하일 경우 적을 비활성화

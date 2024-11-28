@@ -179,39 +179,39 @@ MonoBehaviour:
   - health: 60
     maxShotSpeed: 0.76
     speed: 3.5
-    enemyExp: 6
+    enemyExp: 5
   - health: 70
     maxShotSpeed: 0.72
     speed: 4
-    enemyExp: 7
+    enemyExp: 5
   - health: 80
     maxShotSpeed: 0.68
     speed: 4.5
-    enemyExp: 8
+    enemyExp: 5
   - health: 90
     maxShotSpeed: 0.64
     speed: 5
-    enemyExp: 9
+    enemyExp: 5
   - health: 100
     maxShotSpeed: 0.6
     speed: 5.5
-    enemyExp: 10
+    enemyExp: 5
   - health: 110
     maxShotSpeed: 0.56
     speed: 6
-    enemyExp: 11
+    enemyExp: 5
   - health: 120
     maxShotSpeed: 0.52
     speed: 6.5
-    enemyExp: 12
+    enemyExp: 5
   - health: 130
     maxShotSpeed: 0.48
     speed: 7
-    enemyExp: 13
+    enemyExp: 5
   - health: 140
     maxShotSpeed: 0.44
     speed: 7.5
-    enemyExp: 14
+    enemyExp: 5
   enemyName: L
   speed: 1
   health: 50
@@ -223,6 +223,7 @@ MonoBehaviour:
   enemyBulletSpeed: 10
   enemyExp: 5
   enemyLevel: 0
+  isClear: 0
   player: {fileID: 0}
   objectManager: {fileID: 0}
   gameManager: {fileID: 0}
