@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
 
     public Animator startAnim;
     public Animator endAnim;
-    public Animator fadeAnim;
+    public Animator startFadeAnim;
+    public Animator endFadeAnim;
     public static GameManager instance;
 
     public bool isLive;
@@ -38,7 +39,9 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public ObjectManager objectManager;
     public LevelUp uiLevelUp;
-    public SButton sbt;
+    public GameObject startIntro;
+    public GameObject endIntro;
+    public Result uiResult;
 
     public List<Spawn> spawnList;
     public int spawnIndex;
@@ -53,21 +56,30 @@ public class GameManager : MonoBehaviour
     }
     public void StageStart()
     {
-        startAnim.SetTrigger("On");
+        StartCoroutine(StartAnimation());
         ReadSpawnFile();
-        fadeAnim.SetTrigger("In");
+    }
+    IEnumerator StartAnimation()
+    {
+        yield return new WaitForSeconds(.01f);
+        startIntro.SetActive(true);
+        startAnim.SetTrigger("On");
+        startFadeAnim.SetTrigger("In");
     }
     public void StageEnd()
     {
-        endAnim.SetTrigger("");
-        fadeAnim.SetTrigger("Out");
+        isLive = false;
+        StartCoroutine(EndAnimation());
         Player.instance.transform.position = new Vector3(0, -3.5f, 0);
-        Invoke("BackIntro", 7f);
+        player.gameObject.transform.localScale=Vector3.zero;
     }
-    public void BackIntro()
+    IEnumerator EndAnimation()
     {
-        SButton.instance.isOpen = true;
-        SceneManager.LoadScene(0);
+        yield return new WaitForSeconds(.01f);
+        endIntro.SetActive(true);
+        endFadeAnim.SetTrigger("Out");
+        yield return new WaitForSeconds(1.1f);
+        Stop();
     }
     void Update()
     {
