@@ -180,44 +180,44 @@ MonoBehaviour:
   levelDatas:
   - health: 20
     maxShotSpeed: 0
-    speed: 10
-    enemyExp: 3
-  - health: 21
+    speed: 6
+    enemyExp: 4
+  - health: 30
     maxShotSpeed: 0
-    speed: 11
-    enemyExp: 3
-  - health: 22
+    speed: 6.2
+    enemyExp: 4
+  - health: 50
     maxShotSpeed: 0
-    speed: 12
-    enemyExp: 3
-  - health: 23
+    speed: 6.2
+    enemyExp: 4
+  - health: 80
     maxShotSpeed: 0
-    speed: 13
-    enemyExp: 3
-  - health: 24
+    speed: 6.4
+    enemyExp: 5
+  - health: 120
     maxShotSpeed: 0
-    speed: 14
-    enemyExp: 3
-  - health: 25
+    speed: 6.4
+    enemyExp: 5
+  - health: 170
     maxShotSpeed: 0
-    speed: 15
-    enemyExp: 3
-  - health: 26
+    speed: 6.6
+    enemyExp: 6
+  - health: 230
     maxShotSpeed: 0
-    speed: 16
-    enemyExp: 3
-  - health: 27
+    speed: 6.6
+    enemyExp: 6
+  - health: 300
     maxShotSpeed: 0
-    speed: 17
-    enemyExp: 3
-  - health: 28
+    speed: 6.8
+    enemyExp: 6
+  - health: 380
     maxShotSpeed: 0
-    speed: 18
-    enemyExp: 3
-  - health: 29
+    speed: 6.8
+    enemyExp: 6
+  - health: 470
     maxShotSpeed: 0
-    speed: 19
-    enemyExp: 3
+    speed: 7
+    enemyExp: 7
   enemyName: M
   speed: 10
   health: 15

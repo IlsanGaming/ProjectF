@@ -48,242 +48,37 @@ public class Enemy : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindObjectOfType<GameManager>();
+
         enemyLevel = gameManager.difficulty;
+
+        // 체력을 포함한 상태 초기화
         switch (enemyName)
         {
             case "L":
-                switch(enemyLevel)
-                {
-                    case 0:
-                        health = levelDatas[0].health;
-                        speed = levelDatas[0].speed;
-                        maxShotSpeed = levelDatas[0].maxShotSpeed;
-                        speed=levelDatas[0].speed;
-                        enemyExp=levelDatas[0].enemyExp;
-                        break;
-                    case 1:
-                        health = levelDatas[1].health;
-                        speed = levelDatas[1].speed;
-                        maxShotSpeed = levelDatas[1].maxShotSpeed;
-                        speed = levelDatas[1].speed;
-                        enemyExp = levelDatas[1].enemyExp;
-                        break;
-                    case 2:
-                        health = levelDatas[2].health;
-                        speed = levelDatas[2].speed;
-                        maxShotSpeed = levelDatas[2].maxShotSpeed;
-                        speed = levelDatas[2].speed;
-                        enemyExp = levelDatas[2].enemyExp;
-                        break;
-                    case 3:
-                        health = levelDatas[3].health;
-                        speed = levelDatas[3].speed;
-                        maxShotSpeed = levelDatas[3].maxShotSpeed;
-                        speed = levelDatas[3].speed;
-                        enemyExp = levelDatas[3].enemyExp;
-                        break;
-                    case 4:
-                        health = levelDatas[4].health;
-                        speed = levelDatas[4].speed;
-                        maxShotSpeed = levelDatas[4].maxShotSpeed;
-                        speed = levelDatas[4].speed;
-                        enemyExp = levelDatas[4].enemyExp;
-                        break;
-                    case 5:
-                        health = levelDatas[5].health;
-                        speed = levelDatas[5].speed;
-                        maxShotSpeed = levelDatas[5].maxShotSpeed;
-                        speed = levelDatas[5].speed;
-                        enemyExp = levelDatas[5].enemyExp;
-                        break;
-                    case 6:
-                        health = levelDatas[6].health;
-                        speed = levelDatas[6].speed;
-                        maxShotSpeed = levelDatas[6].maxShotSpeed;
-                        speed = levelDatas[6].speed;
-                        enemyExp = levelDatas[6].enemyExp;
-                        break;
-                    case 7:
-                        health = levelDatas[7].health;
-                        speed = levelDatas[7].speed;
-                        maxShotSpeed = levelDatas[7].maxShotSpeed;
-                        speed = levelDatas[7].speed;
-                        enemyExp = levelDatas[7].enemyExp;
-                        break;
-                    case 8:
-                        health = levelDatas[8].health;
-                        speed = levelDatas[8].speed;
-                        maxShotSpeed = levelDatas[8].maxShotSpeed;
-                        speed = levelDatas[8].speed;
-                        enemyExp = levelDatas[8].enemyExp;
-                        break;
-                    case 9:
-                        health = levelDatas[9].health;
-                        speed = levelDatas[9].speed;
-                        maxShotSpeed = levelDatas[9].maxShotSpeed;
-                        speed = levelDatas[9].speed;
-                        enemyExp = levelDatas[9].enemyExp;
-                        break;
-                }
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
             case "M":
-                switch (enemyLevel)
-                {
-                    case 0:
-                        health = levelDatas[0].health;
-                        speed = levelDatas[0].speed;
-                        maxShotSpeed = levelDatas[0].maxShotSpeed;
-                        speed = levelDatas[0].speed;
-                        enemyExp = levelDatas[0].enemyExp;
-                        break;
-                    case 1:
-                        health = levelDatas[1].health;
-                        speed = levelDatas[1].speed;
-                        maxShotSpeed = levelDatas[1].maxShotSpeed;
-                        speed = levelDatas[1].speed;
-                        enemyExp = levelDatas[1].enemyExp;
-                        break;
-                    case 2:
-                        health = levelDatas[2].health;
-                        speed = levelDatas[2].speed;
-                        maxShotSpeed = levelDatas[2].maxShotSpeed;
-                        speed = levelDatas[2].speed;
-                        enemyExp = levelDatas[2].enemyExp;
-                        break;
-                    case 3:
-                        health = levelDatas[3].health;
-                        speed = levelDatas[3].speed;
-                        maxShotSpeed = levelDatas[3].maxShotSpeed;
-                        speed = levelDatas[3].speed;
-                        enemyExp = levelDatas[3].enemyExp;
-                        break;
-                    case 4:
-                        health = levelDatas[4].health;
-                        speed = levelDatas[4].speed;
-                        maxShotSpeed = levelDatas[4].maxShotSpeed;
-                        speed = levelDatas[4].speed;
-                        enemyExp = levelDatas[4].enemyExp;
-                        break;
-                    case 5:
-                        health = levelDatas[5].health;
-                        speed = levelDatas[5].speed;
-                        maxShotSpeed = levelDatas[5].maxShotSpeed;
-                        speed = levelDatas[5].speed;
-                        enemyExp = levelDatas[5].enemyExp;
-                        break;
-                    case 6:
-                        health = levelDatas[6].health;
-                        speed = levelDatas[6].speed;
-                        maxShotSpeed = levelDatas[6].maxShotSpeed;
-                        speed = levelDatas[6].speed;
-                        enemyExp = levelDatas[6].enemyExp;
-                        break;
-                    case 7:
-                        health = levelDatas[7].health;
-                        speed = levelDatas[7].speed;
-                        maxShotSpeed = levelDatas[7].maxShotSpeed;
-                        speed = levelDatas[7].speed;
-                        enemyExp = levelDatas[7].enemyExp;
-                        break;
-                    case 8:
-                        health = levelDatas[8].health;
-                        speed = levelDatas[8].speed;
-                        maxShotSpeed = levelDatas[8].maxShotSpeed;
-                        speed = levelDatas[8].speed;
-                        enemyExp = levelDatas[8].enemyExp;
-                        break;
-                    case 9:
-                        health = levelDatas[9].health;
-                        speed = levelDatas[9].speed;
-                        maxShotSpeed = levelDatas[9].maxShotSpeed;
-                        speed = levelDatas[9].speed;
-                        enemyExp = levelDatas[9].enemyExp;
-                        break;
-                }
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
             case "S":
-                switch (enemyLevel)
-                {
-                    case 0:
-                        health = levelDatas[0].health;
-                        speed = levelDatas[0].speed;
-                        maxShotSpeed = levelDatas[0].maxShotSpeed;
-                        speed = levelDatas[0].speed;
-                        enemyExp = levelDatas[0].enemyExp;
-                        break;
-                    case 1:
-                        health = levelDatas[1].health;
-                        speed = levelDatas[1].speed;
-                        maxShotSpeed = levelDatas[1].maxShotSpeed;
-                        speed = levelDatas[1].speed;
-                        enemyExp = levelDatas[1].enemyExp;
-                        break;
-                    case 2:
-                        health = levelDatas[2].health;
-                        speed = levelDatas[2].speed;
-                        maxShotSpeed = levelDatas[2].maxShotSpeed;
-                        speed = levelDatas[2].speed;
-                        enemyExp = levelDatas[2].enemyExp;
-                        break;
-                    case 3:
-                        health = levelDatas[3].health;
-                        speed = levelDatas[3].speed;
-                        maxShotSpeed = levelDatas[3].maxShotSpeed;
-                        speed = levelDatas[3].speed;
-                        enemyExp = levelDatas[3].enemyExp;
-                        break;
-                    case 4:
-                        health = levelDatas[4].health;
-                        speed = levelDatas[4].speed;
-                        maxShotSpeed = levelDatas[4].maxShotSpeed;
-                        speed = levelDatas[4].speed;
-                        enemyExp = levelDatas[4].enemyExp;
-                        break;
-                    case 5:
-                        health = levelDatas[5].health;
-                        speed = levelDatas[5].speed;
-                        maxShotSpeed = levelDatas[5].maxShotSpeed;
-                        speed = levelDatas[5].speed;
-                        enemyExp = levelDatas[5].enemyExp;
-                        break;
-                    case 6:
-                        health = levelDatas[6].health;
-                        speed = levelDatas[6].speed;
-                        maxShotSpeed = levelDatas[6].maxShotSpeed;
-                        speed = levelDatas[6].speed;
-                        enemyExp = levelDatas[6].enemyExp;
-                        break;
-                    case 7:
-                        health = levelDatas[7].health;
-                        speed = levelDatas[7].speed;
-                        maxShotSpeed = levelDatas[7].maxShotSpeed;
-                        speed = levelDatas[7].speed;
-                        enemyExp = levelDatas[7].enemyExp;
-                        break;
-                    case 8:
-                        health = levelDatas[8].health;
-                        speed = levelDatas[8].speed;
-                        maxShotSpeed = levelDatas[8].maxShotSpeed;
-                        speed = levelDatas[8].speed;
-                        enemyExp = levelDatas[8].enemyExp;
-                        break;
-                    case 9:
-                        health = levelDatas[9].health;
-                        speed = levelDatas[9].speed;
-                        maxShotSpeed = levelDatas[9].maxShotSpeed;
-                        speed = levelDatas[9].speed;
-                        enemyExp = levelDatas[9].enemyExp;
-                        break;
-                }
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
             case "B":
-                health = 1000;
-                Invoke("Stop", 1.6f);
+                health = 1000; // 보스 체력 고정
                 break;
-
         }
-    }
 
+        curShotSpeed = 0; // 장전 속도 초기화
+    }
     // 보스 적을 멈추게 하는 함수
     void Stop()
     {
@@ -470,19 +265,20 @@ public class Enemy : MonoBehaviour
             // 0.1초 후 원래 스프라이트로 복구
             Invoke("ReturnSprite", 0.1f);
         }
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.EnemyHit);
 
         if (health <= 0)
         {
-            gameManager.GetExp();
+            health = 0; // 체력을 0으로 고정
+            gameManager.GetExp(enemyExp);
             DropItem();
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
             gameManager.CallExplosion(transform.position, enemyName);
-            // 보스 적을 처치한 경우 스테이지 종료 처리
+            if(GameManager.instance.isLive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.EnemyDead);
             if (enemyName == "B")
-            {
                 Invoke("Clear", 5f);
-            }
         }
     }
     void Clear()
@@ -496,16 +292,16 @@ public class Enemy : MonoBehaviour
         int ran = enemyName == "B" ? 0 : Random.Range(0, 10);
         GameObject item = null;
 
-        if (ran < 3)
+        if (ran < 6)
         {
             Debug.Log("Not Item");
         }
-        else if (ran < 6)
+        else if (ran < 7)
         {
             Debug.Log("Attempting to create itemSkill...");
             item = objectManager.MakeObj("itemSkill");
         }
-        else if (ran < 8)
+        else if (ran < 9)
         {
             Debug.Log("Attempting to create itemExp...");
             item = objectManager.MakeObj("itemExp");
@@ -538,9 +334,6 @@ public class Enemy : MonoBehaviour
         {
             switch (enemyLevel)
             {
-                case 1:
-                    CreateBullet("bulletEnemyA", Vector3.zero);
-                    break;
                 default:
                     CreateBullet("bulletEnemyA", Vector3.right * 0.1f);
                     CreateBullet("bulletEnemyA", Vector3.left * 0.1f);

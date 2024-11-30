@@ -191,7 +191,7 @@ MonoBehaviour:
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
-  enemyExp: 1
+  enemyExp: 0
   enemyLevel: 0
   isClear: 0
   player: {fileID: 0}

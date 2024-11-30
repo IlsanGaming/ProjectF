@@ -17,7 +17,9 @@ public class Result : MonoBehaviour
     }
     public void BackToMain()
     {
-        SceneManager.LoadScene(0);
         Enemy.instance.isClear = true;
+        GameManager.instance.isLive = false;
+        GameManager.instance.spawnList.Clear();
+        SceneManager.LoadScene(0);
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms.Impl;
 using static UnityEditor.Progress;
 
@@ -54,9 +53,6 @@ public class Player : MonoBehaviour
     public bool isTouchRight;
     public bool isTouchLeft;
 
-    public bool isSkill5;
-
-    public bool isSkillControl;
 
     public GameManager gameManager;
     public ObjectManager objectManager;
@@ -69,6 +65,8 @@ public class Player : MonoBehaviour
 
 
     Animator anim;
+
+    public VariableJoystick joy;
     void Awake()
     {
         instance = this; // Player 인스턴스 초기화
@@ -90,7 +88,6 @@ public class Player : MonoBehaviour
         Skill3();
         Skill4();
         Skill4Charge();
-        Skill5();
     }
     void LateUpdate()
     {
@@ -138,10 +135,10 @@ public class Player : MonoBehaviour
                 curVerticalBulletSpeed = 12f;
                 break;
             case 3:
-                curVerticalBulletSpeed = 14f;
+                curVerticalBulletSpeed = 13f;
                 break;
             case 4:
-                curVerticalBulletSpeed = 16f;
+                curVerticalBulletSpeed = 14f;
                 break;
         }
     }
@@ -194,8 +191,8 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float h = joy.Horizontal;
+        float v = joy.Vertical;
         if ((isTouchRight && h == -1) || (isTouchLeft && h == 1))
             h = 0;
         if ((isTouchTop && v == 1) || (isTouchBottom && v == -1))
@@ -249,8 +246,8 @@ public class Player : MonoBehaviour
                 CreateSkill1("bulletPlayerB", new Vector3(0.65f, -0.5f, 0f), new Color(255, 0, 127));
                 break;
         }
-
         curShotSpeed = 0;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
     }
     void Skill1Reload()
     {
@@ -349,19 +346,19 @@ public class Player : MonoBehaviour
                 curCharge = 0;
                 return;
             case 1:
-                gainMultiplier = 1f;
+                gainMultiplier = 0.3f;
                 break;
             case 2:
-                gainMultiplier = 1.2f;
+                gainMultiplier = 0.4f;
                 break;
             case 3:
-                gainMultiplier = 1.4f;
+                gainMultiplier = 0.5f;
                 break;
             case 4:
-                gainMultiplier = 1.6f;
+                gainMultiplier = 0.55f;
                 break;
             case 5:
-                gainMultiplier = 2f;
+                gainMultiplier = 0.6f;
                 break;
         }
         HealthGain(gainMultiplier);
@@ -401,53 +398,29 @@ public class Player : MonoBehaviour
     }
     public void ButtonSkillDown()
     {
-        isSkillControl = true;
+        Skill5();
     }
     void Skill5()
     {
-        if (!isSkillControl)
-            return;
-        if(isSkill5)
-            return;
         if (skill5Stack==0)
             return;
         skill5Stack--;
-        isSkill5 = true;
         boomEffect.SetActive(true);
         Invoke("OffBoomEffect", 1.5f);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int index = 0; index < enemies.Length; index++)
         {
             Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-            enemyLogic.OnHit(10000000);
+            enemyLogic.OnHit(10000);
         }
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
         for (int index = 0; index < bullets.Length; index++)
         {
-            RemoveEnemies();
+            RemoveBullets("BulletEnemyA");
+            RemoveBullets("BulletEnemyB");
+            RemoveBullets("bulletBossA");
+            RemoveBullets("bulletBossB");
         }
-    }
-    // 적 제거 처리 함수
-    void RemoveEnemies()
-    {
-        GameObject[] enemiesL = objectManager.GetPool("enemyL");if (enemiesL == null) return;
-        GameObject[] enemiesM = objectManager.GetPool("enemyL");if (enemiesM == null) return;
-        GameObject[] enemiesS = objectManager.GetPool("enemyL");if (enemiesS == null) return;
-        foreach (var enemy in enemiesL)
-            if (enemy != null && enemy.activeSelf)
-                enemy.GetComponent<Enemy>().OnHit(1000);
-        foreach (var enemy in enemiesM)
-            if (enemy != null && enemy.activeSelf)
-                enemy.GetComponent<Enemy>().OnHit(1000);
-        foreach (var enemy in enemiesS)
-            if (enemy != null && enemy.activeSelf)
-                enemy.GetComponent<Enemy>().OnHit(1000);
-
-        // 적 총알 제거
-        RemoveBullets("BulletEnemyA");
-        RemoveBullets("BulletEnemyB");
-        RemoveBullets("bulletBossA");
-        RemoveBullets("bulletBossB");
     }
     // 적 총알 제거 처리 함수
     void RemoveBullets(string type)
@@ -488,27 +461,13 @@ public class Player : MonoBehaviour
                 break;
 
             case "Exp":
-                for (int i = 0; i < 5; i++)
-                {
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                }
+                gameManager.GetExp(Mathf.FloorToInt(GameManager.instance.nextExp[GameManager.instance.level]*0.1f));
                 break;
 
             case "Boom":
                 if (skill5Stack == maxskill5Stack)
                 {
-                    gameManager.GetExp();
-                    gameManager.GetExp();
-                    gameManager.GetExp();
+                    gameManager.GetExp(5);
                     Debug.Log("Skill5 Stack Full: Extra Experience Gained");
                 }
                 else
@@ -528,7 +487,6 @@ public class Player : MonoBehaviour
     void OffBoomEffect()
     {
         boomEffect.SetActive(false);
-        isSkill5 = false;
     }
     void OnDamaged(Vector3 targetPos)
     {

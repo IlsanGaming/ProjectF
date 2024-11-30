@@ -44,10 +44,10 @@ public class HUD : MonoBehaviour
                 mySlider.value = curExp / maxExp; // 경험치 비율로 슬라이더 값 설정
                 break;
             case InfoType.Time:
-                // 남은 시간 텍스트 업데이트
-                float remainTime = GameManager.instance.maxGameTime - GameManager.instance.gameTime; // 남은 시간 계산
-                int min = Mathf.FloorToInt(remainTime / 60); // 분 단위 계산
-                int sec = Mathf.FloorToInt(remainTime % 60); // 초 단위 계산
+                // 진행 시간 텍스트 업데이트
+                float gameTime = GameManager.instance.gameTime; // 남은 시간 계산
+                int min = Mathf.FloorToInt(gameTime / 60); // 분 단위 계산
+                int sec = Mathf.FloorToInt(gameTime % 60); // 초 단위 계산
                 myText.text = string.Format("{0:D2}:{1:D2}", min, sec); // "MM:SS" 형식으로 시간 표시
                 break;
             case InfoType.HealthG:

@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 0
   skillId: 0
-  skillName: "\uB9C8\uB825 \uD3ED\uD48D"
-  skillDesc: "\uC8FC\uC778\uACF5\uC774 \uB0A0\uAC1C\uB97C \uD06C\uAC8C \n\uD3BC\uCCD0
-    \uC801\uC744 \uC4F8\uC5B4\uBC84\uB9BD\uB2C8\uB2E4."
+  skillName: "\uC774\uD504\uB2C8\uB974\uC758 \uD55C\uC190\uC9C0\uD321\uC774"
+  skillDesc: "\uC804\uBC29\uC73C\uB85C \uB9C8\uB825\uC744 \uB0A0\uB824\n\uC801\uC744
+    \uACF5\uACA9\uD569\uB2C8\uB2E4."
   skillIcon: {fileID: -181907988, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   grade:
-  - "\uD76C\uBBF8\uD55C"
-  - "\uBE5B\uB098\uB294"
-  - "\uCC2C\uB780\uD55C"
-  - "\uACE0\uADC0\uD55C"
-  - "\uC22D\uACE0\uD55C"
-  - "\uC644\uC804\uD55C"
-  - "\uC804\uC124\uC801\uC778"
+  - 
+  - "[\uAE68\uC5B4\uB09C]"
+  - "[\uAED8\uC5B4\uB09C+]"
+  - "[\uD574\uBC29\uB41C]"
+  - "[\uD574\uBC29\uB41C+]"
+  - "[\uC815\uB828\uB41C]"
+  - "[\uC815\uB828\uB41C+]"

@@ -15,15 +15,18 @@ public class LevelUp : MonoBehaviour
     }
     public void Show()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
+        AudioManager.instance.EffectBgm(true);
         Next();
         rect.localScale= Vector3.one;
-        Player.instance.boomEffect.SetActive(false);
         GameManager.instance.Stop();
     }
     public void Hide()
     {
         rect.localScale=-Vector3.zero;
         GameManager.instance.Resume();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        AudioManager.instance.EffectBgm(true);
     }
     void Next()
     {
@@ -82,5 +85,6 @@ public class LevelUp : MonoBehaviour
                 ranSkill.gameObject.SetActive(true); // 일반 아이템 활성화
             }
         }
+        GameManager.instance.GetExp(0);
     }
 }

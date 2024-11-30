@@ -50,35 +50,57 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         spawnList = new List<Spawn>();
         enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB" };
-        StageStart();
     }
     public void StageStart()
     {
+        AudioManager.instance.PlayBgm(true);
+        Debug.Log("StageStart 실행"); // 디버깅 로그 추가
+        // 애니메이터 초기화
+        startAnim.ResetTrigger("On");
+        startFadeAnim.ResetTrigger("In");
+
+        // 애니메이션 실행
         StartCoroutine(StartAnimation());
+        
         ReadSpawnFile();
+        isLive = true;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
     }
     IEnumerator StartAnimation()
     {
+        Debug.Log("StartAnimation 시작"); // 디버깅 로그 추가
         yield return new WaitForSeconds(.01f);
-        startIntro.SetActive(true);
-        startAnim.SetTrigger("On");
-        startFadeAnim.SetTrigger("In");
+
+        Debug.Log("StartAnimation 중간"); // 디버깅 로그 추가
+        if (startIntro != null) startIntro.SetActive(true);
+        if (startAnim != null) startAnim.SetTrigger("On");
+        if (startFadeAnim != null) startFadeAnim.SetTrigger("In");
+
         yield return new WaitForSeconds(6f);
-        startIntro.SetActive(false);
+
+        Debug.Log("StartAnimation 종료"); // 디버깅 로그 추가
+        if (startIntro != null) startIntro.SetActive(false);
     }
-    void HideIntro()
-    {
-        startIntro.SetActive(false);
-    }
+
     public void StageWin()
     {
         isLive = false;
         StartCoroutine(WinResult());
         Player.instance.transform.position = new Vector3(0, -3.5f, 0);
         player.gameObject.transform.localScale = Vector3.zero;
+        startIntro.SetActive(true);
     }
     IEnumerator WinResult()
     {
@@ -91,6 +113,8 @@ public class GameManager : MonoBehaviour
         endButtonText.SetTrigger("On");
         yield return new WaitForSeconds(1.1f);
         Stop();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
+        AudioManager.instance.PlayBgm(false);
     }
     public void StageLose()
     {
@@ -98,6 +122,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoseResult());
         Player.instance.transform.position = new Vector3(0, -3.5f, 0);
         player.gameObject.transform.localScale = Vector3.zero;
+        startIntro.SetActive(true);
+        AudioManager.instance.PlayBgm(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
     }
     IEnumerator LoseResult()
     {
@@ -196,12 +223,12 @@ public class GameManager : MonoBehaviour
         if (enemyPoint == 5 || enemyPoint == 6)
         {
             enemy.transform.Rotate(Vector3.forward * 90);
-            rigid.velocity = new Vector2(enemyLogic.speed, -0.5f);
+            rigid.velocity = new Vector2(enemyLogic.speed, -0.9f);
         }
         else if (enemyPoint == 7 || enemyPoint == 8)
         {
             enemy.transform.Rotate(Vector3.back * 90);
-            rigid.velocity = new Vector2(enemyLogic.speed * (-1), -0.5f);
+            rigid.velocity = new Vector2(enemyLogic.speed * (-1), -0.9f);
         }
         else
         {
@@ -225,20 +252,29 @@ public class GameManager : MonoBehaviour
         explosionLogic.StartExplosion(type); // 폭발 애니메이션 시작
     }
     // 경험치를 획득하고 레벨업 처리
-    public void GetExp()
+    public void GetExp(int gainexp)
     {
         if (!isLive) // 게임이 비활성화 상태면 동작하지 않음
             return;
 
-        exp++; // 경험치 증가
+        exp += gainexp;
 
         // 경험치가 다음 레벨업 요구치를 충족하면 레벨업 처리
-        if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
+        if (exp > nextExp[Mathf.Min(level, nextExp.Length - 1)])
         {
             level++; // 레벨 증가
-            exp = 0; // 경험치 초기화
-            uiLevelUp.Show(); // 레벨업 UI 표시
+            exp = nextExp[Mathf.Min(level, nextExp.Length - 1)]-exp;
+            Debug.Log("현재 레벨 : " + level);
+            Debug.Log("필요 경험치" + nextExp[level]);
+            StartCoroutine(ReadyToShow());
         }
+    }
+    IEnumerator ReadyToShow()
+    {
+        yield return null;
+        Player.instance.boomEffect.SetActive(false);
+        yield return null;
+        uiLevelUp.Show(); // 레벨업 UI 표시
     }
     public void Stop()
     {

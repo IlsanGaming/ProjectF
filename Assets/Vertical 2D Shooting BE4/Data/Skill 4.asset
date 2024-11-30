@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 3
   skillId: 3
-  skillName: "\uC0D8\uC19F\uB294 \uC0DD\uBA85\uB825"
+  skillName: "\uC5D8\uB9AC\uC2DC\uC544\uC758 \uBAA9\uAC78\uC774"
   skillDesc: "10\uCD08\uC5D0 \uD55C\uBC88, \uCD5C\uB300\uCCB4\uB825\uC758 \n\uC77C\uBD80\uB97C
     \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   skillIcon: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   grade:
-  - "\uD76C\uBBF8\uD55C"
-  - "\uBE5B\uB098\uB294"
-  - "\uCC2C\uB780\uD55C"
-  - "\uACE0\uADC0\uD55C"
-  - "\uC22D\uACE0\uD55C"
-  - "\uC644\uC804\uD55C"
+  - ' '
+  - "[\uAE68\uC5B4\uB09C]"
+  - "[\uAED8\uC5B4\uB09C+]"
+  - "[\uD574\uBC29\uB41C]"
+  - "[\uD574\uBC29\uB41C+]"
+  - "[\uC815\uB828\uB41C]"
