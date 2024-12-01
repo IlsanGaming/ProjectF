@@ -73,7 +73,8 @@ public class Enemy : MonoBehaviour
                 enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
             case "B":
-                health = 1000; // 보스 체력 고정
+                health = 30; // 보스 체력 고정
+                Invoke("Stop", 1.6f);
                 break;
         }
 
@@ -278,14 +279,18 @@ public class Enemy : MonoBehaviour
             if(GameManager.instance.isLive)
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.EnemyDead);
             if (enemyName == "B")
+            {
+                GameManager.instance.StoryClear = true;
                 Invoke("Clear", 5f);
+
+            }
+                
         }
     }
     void Clear()
     {
-        isClear = true;
+        GameManager.instance.isLive=false;
         gameManager.StageWin();
-        gameManager.storyClear = true;
     }
     void DropItem()
     {

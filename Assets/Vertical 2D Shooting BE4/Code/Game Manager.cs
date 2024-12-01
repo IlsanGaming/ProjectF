@@ -10,9 +10,7 @@ using System.ComponentModel;
 public class GameManager : MonoBehaviour
 {
     public int stage;
-    public bool storyClear;
-
-    public Animator startAnim;
+    public bool StoryClear;
     public Animator endAnim;
     public Animator startFadeAnim;
     public Animator endFadeAnim;
@@ -32,9 +30,11 @@ public class GameManager : MonoBehaviour
     public string[] enemyObjs;
     public Transform[] spawnPoints;
     public Image[] skill5Image;
+    public GameObject[] DiffupText;
+    public int previousDifficulty = -1;
 
     public int exp;
-    public int[] nextExp = { 3, 5, 10, 100, 150, 210, 280, 360, 450, 600 }; // 레벨업에 필요한 경험치 배열
+    public int[] nextExp; // 레벨업에 필요한 경험치 배열
     public int level; // 현재 플레이어 레벨
 
     public GameObject player;
@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour
     public GameObject startIntro;
     public GameObject endIntro;
     public Result uiResult;
+    public GameObject[] prologue;
+    public GameObject[] epilogue;
+    public GameObject prologueFrame;
+    public GameObject epilogueFrame;
 
     public List<Spawn> spawnList;
     public int spawnIndex;
@@ -63,14 +67,83 @@ public class GameManager : MonoBehaviour
         spawnList = new List<Spawn>();
         enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB" };
     }
+    public void ShowPrologue1()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼1활성화됨");
+        prologueFrame.SetActive(true);
+        prologue[0].SetActive(true);
+    }
+    public void ShowPrologue2()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼1비활성화됨");
+        prologue[0].SetActive(false);
+        prologue[1].SetActive(true);
+        Debug.Log("버튼2활성화됨");
+    }
+    public void ShowPrologue3()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼2비활성화됨");
+        prologue[1].SetActive(false);
+        prologue[2].SetActive(true);
+        Debug.Log("버튼3활성화됨");
+    }
+    public void ShowPrologue4()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼3비활성화됨");
+        prologue[2].SetActive(false);
+        prologue[3].SetActive(true);
+        Debug.Log("버튼4활성화됨");
+    }
+    public void ShowPrologue5()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼4비활성화됨");
+        prologue[3].SetActive(false);
+        prologue[4].SetActive(true);
+        Debug.Log("버튼5활성화됨");
+    }
+    public void ShowPrologue6()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼5비활성화됨");
+        prologue[4].SetActive(false);
+        prologue[5].SetActive(true);
+        Debug.Log("버튼6활성화됨");
+    }
+    public void ShowPrologue7()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼6비활성화됨");
+        prologue[5].SetActive(false);
+        prologue[6].SetActive(true);
+        Debug.Log("버튼7활성화됨");
+    }
+    public void ShowPrologue8()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼7비활성화됨");
+        prologue[6].SetActive(false);
+        prologue[7].SetActive(true);
+        Debug.Log("버튼8활성화됨");
+    }
+    public void EndPrologue()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        Debug.Log("버튼8비활성화됨");
+        prologue[7].SetActive(false);
+        prologueFrame.SetActive(false);
+        StageStart();
+    }
     public void StageStart()
     {
         AudioManager.instance.PlayBgm(true);
         Debug.Log("StageStart 실행"); // 디버깅 로그 추가
         // 애니메이터 초기화
-        startAnim.ResetTrigger("On");
         startFadeAnim.ResetTrigger("In");
-
         // 애니메이션 실행
         StartCoroutine(StartAnimation());
         
@@ -85,10 +158,9 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("StartAnimation 중간"); // 디버깅 로그 추가
         if (startIntro != null) startIntro.SetActive(true);
-        if (startAnim != null) startAnim.SetTrigger("On");
         if (startFadeAnim != null) startFadeAnim.SetTrigger("In");
 
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2f);
 
         Debug.Log("StartAnimation 종료"); // 디버깅 로그 추가
         if (startIntro != null) startIntro.SetActive(false);
@@ -96,6 +168,19 @@ public class GameManager : MonoBehaviour
 
     public void StageWin()
     {
+        AudioManager.instance.PlayBgm(false);
+        epilogueFrame.SetActive(true);
+        epilogue[0].SetActive(true);
+    }
+    public void ReadyToEnd()
+    {
+        epilogue[0].SetActive(false);
+        epilogue[1].SetActive(true);
+    }
+    public void PrintWinResult()
+    {
+        epilogue[1].SetActive(false);
+        epilogueFrame.SetActive(false);
         isLive = false;
         StartCoroutine(WinResult());
         Player.instance.transform.position = new Vector3(0, -3.5f, 0);
@@ -114,7 +199,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
         Stop();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
-        AudioManager.instance.PlayBgm(false);
     }
     public void StageLose()
     {
@@ -155,19 +239,39 @@ public class GameManager : MonoBehaviour
     void SetGameDifference()
     {
         gameTime += Time.deltaTime;
-        difficulty = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
-        if (difficulty > maxDifficulty)
+        int newDifficulty = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
+
+        // 난이도가 최대치를 넘지 않도록 제한
+        if (newDifficulty > maxDifficulty)
         {
-            difficulty = maxDifficulty;
+            newDifficulty = maxDifficulty;
         }
-    }
-    public void NextStage()
-    {
 
-    }
-    public void StageEnd()
-    {
+        // 난이도가 변경되었을 때만 텍스트를 표시
+        if (newDifficulty != previousDifficulty)
+        {
+            ShowDiffText(newDifficulty);
+            previousDifficulty = newDifficulty; // 이전 난이도를 업데이트
+        }
 
+        difficulty = newDifficulty; // 현재 난이도 업데이트
+    }
+    void ShowDiffText(int difflevel)
+    {
+        // DiffupText 배열의 해당 레벨 텍스트 활성화
+        DiffupText[difflevel].SetActive(true);
+
+        // 5초 후 비활성화를 위한 코루틴 실행
+        StartCoroutine(HideDiffTextAfterDelay(difflevel));
+    }
+
+    IEnumerator HideDiffTextAfterDelay(int difflevel)
+    {
+        // 5초 대기
+        yield return new WaitForSeconds(5f);
+
+        // DiffupText 배열의 해당 레벨 텍스트 비활성화
+        DiffupText[difflevel].SetActive(false);
     }
     void ReadSpawnFile()
     {
@@ -271,8 +375,6 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ReadyToShow()
     {
-        yield return null;
-        Player.instance.boomEffect.SetActive(false);
         yield return null;
         uiLevelUp.Show(); // 레벨업 UI 표시
     }

@@ -8,6 +8,6 @@ public class GameStart : MonoBehaviour
     {
         Debug.Log("OnclickStory 실행"); // 디버깅 로그 추가
         gameObject.SetActive(false);
-        GameManager.instance.StageStart();
+        GameManager.instance.ShowPrologue1();
     }
 }

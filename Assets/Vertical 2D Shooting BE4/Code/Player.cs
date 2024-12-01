@@ -449,6 +449,7 @@ public class Player : MonoBehaviour
     }
     public void HandleItemPickup(Item item)
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Pickup);
         switch (item.type)
         {
             case "Health":
@@ -490,6 +491,7 @@ public class Player : MonoBehaviour
     }
     void OnDamaged(Vector3 targetPos)
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.PlayerHit);
         Debug.Log("OnHit!");
 
         // 기존 속도를 초기화하여 밀려나는 효과가 계속되지 않도록 설정
