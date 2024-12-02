@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7397212874860131943
+--- !u!1 &342216272468538193
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5600302381168319848}
-  - component: {fileID: 3976509105599542714}
-  - component: {fileID: 198426445063314017}
-  - component: {fileID: 2361595684443177796}
-  - component: {fileID: 5156347045437248787}
+  - component: {fileID: 7219515436247416116}
+  - component: {fileID: 1829546059590693108}
+  - component: {fileID: 8016277043433168316}
+  - component: {fileID: 4914618692148952646}
+  - component: {fileID: 6917335756061994959}
   m_Layer: 6
-  m_Name: enemyL
+  m_Name: enemyES
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5600302381168319848
+--- !u!4 &7219515436247416116
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397212874860131943}
+  m_GameObject: {fileID: 342216272468538193}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -35,13 +35,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3976509105599542714
+--- !u!212 &1829546059590693108
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397212874860131943}
+  m_GameObject: {fileID: 342216272468538193}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,24 +76,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8421458170528590454, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.3333334, y: 1.125}
+  m_Size: {x: 0.5, y: 0.45833334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &198426445063314017
-BoxCollider2D:
+--- !u!58 &8016277043433168316
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397212874860131943}
+  m_GameObject: {fileID: 342216272468538193}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -120,26 +120,16 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3333334, y: 1.125}
-    newSize: {x: 1.3333334, y: 1.125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.125}
-  m_EdgeRadius: 0
---- !u!50 &2361595684443177796
+  m_Radius: 0.25
+--- !u!50 &4914618692148952646
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397212874860131943}
+  m_GameObject: {fileID: 342216272468538193}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -159,69 +149,69 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5156347045437248787
+--- !u!114 &6917335756061994959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397212874860131943}
+  m_GameObject: {fileID: 342216272468538193}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c982e3b4ee7e8f34793ef72574c3d973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelDatas:
-  - health: 50
+  - health: 40
+    maxShotSpeed: 1
+    speed: 3
+    enemyExp: 3
+  - health: 60
+    maxShotSpeed: 1
+    speed: 3.1
+    enemyExp: 3
+  - health: 100
+    maxShotSpeed: 0.9
+    speed: 3.1
+    enemyExp: 3
+  - health: 160
+    maxShotSpeed: 0.9
+    speed: 3.2
+    enemyExp: 4
+  - health: 260
     maxShotSpeed: 0.8
-    speed: 1
-    enemyExp: 10
-  - health: 65
-    maxShotSpeed: 0.76
-    speed: 1.1
-    enemyExp: 10
-  - health: 95
-    maxShotSpeed: 0.72
-    speed: 1.1
-    enemyExp: 12
-  - health: 150
-    maxShotSpeed: 0.68
-    speed: 1.2
-    enemyExp: 14
-  - health: 210
-    maxShotSpeed: 0.64
-    speed: 1.2
-    enemyExp: 18
-  - health: 285
+    speed: 3.2
+    enemyExp: 4
+  - health: 380
+    maxShotSpeed: 0.8
+    speed: 3.3
+    enemyExp: 4
+  - health: 560
+    maxShotSpeed: 0.7
+    speed: 3.3
+    enemyExp: 5
+  - health: 720
+    maxShotSpeed: 0.7
+    speed: 3.4
+    enemyExp: 5
+  - health: 820
     maxShotSpeed: 0.6
-    speed: 1.2
-    enemyExp: 22
-  - health: 375
-    maxShotSpeed: 0.56
-    speed: 1.3
-    enemyExp: 26
-  - health: 480
-    maxShotSpeed: 0.52
-    speed: 1.4
-    enemyExp: 30
-  - health: 600
-    maxShotSpeed: 0.48
-    speed: 1.5
-    enemyExp: 35
-  - health: 735
-    maxShotSpeed: 0.44
-    speed: 1.5
-    enemyExp: 40
-  enemyName: L
-  speed: 1
-  health: 50
+    speed: 3.5
+    enemyExp: 5
+  - health: 1020
+    maxShotSpeed: 0.6
+    speed: 3.6
+    enemyExp: 5
+  enemyName: S
+  speed: 3
+  health: 10
   sprites:
-  - {fileID: -8421458170528590454, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: 3714015224569861163, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  - {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
-  enemyExp: 5
+  enemyExp: 1
   enemyLevel: 0
   isClear: 0
   player: {fileID: 0}

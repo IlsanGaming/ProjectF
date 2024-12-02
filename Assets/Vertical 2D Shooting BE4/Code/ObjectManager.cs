@@ -8,8 +8,11 @@ public class ObjectManager : MonoBehaviour
     // 프리팹 변수: 게임 오브젝트 생성에 사용할 원본 프리팹들을 선언
     public GameObject enemyBPrefab; // 보스 적
     public GameObject enemyLPrefab; // 큰 적
+    public GameObject enemyELPrefab; // 엘리트큰 적
     public GameObject enemyMPrefab; // 중간 적
+    public GameObject enemyEMPrefab; // 중간 적
     public GameObject enemySPrefab; // 작은 적
+    public GameObject enemyESPrefab; // 작은 적
     public GameObject itemSkillPrefab; // 코인 아이템
     public GameObject itemExpPrefab; // 파워 업 아이템
     public GameObject itemHealthPrefab; // 폭탄 아이템
@@ -25,9 +28,12 @@ public class ObjectManager : MonoBehaviour
 
     // 오브젝트 풀 배열: 각각의 프리팹에 대해 생성된 오브젝트들을 보관
     GameObject[] enemyB;
+    GameObject[] enemyEL;
     GameObject[] enemyL;
     GameObject[] enemyM;
+    GameObject[] enemyEM;
     GameObject[] enemyS;
+    GameObject[] enemyES;
 
     GameObject[] itemSkill;
     GameObject[] itemExp;
@@ -52,8 +58,11 @@ public class ObjectManager : MonoBehaviour
         // 각각의 오브젝트 풀 배열 크기 설정
         enemyB = new GameObject[5];
         enemyL = new GameObject[30];
+        enemyEL = new GameObject[30];
         enemyM = new GameObject[30];
+        enemyEM = new GameObject[30];
         enemyS = new GameObject[50];
+        enemyES = new GameObject[50];
 
         itemSkill = new GameObject[30];
         itemExp = new GameObject[30];
@@ -88,15 +97,30 @@ public class ObjectManager : MonoBehaviour
             enemyL[index] = Instantiate(enemyLPrefab); // 큰 적 생성
             enemyL[index].SetActive(false);
         }
+        for (int index = 0; index < enemyEL.Length; index++)
+        {
+            enemyEL[index] = Instantiate(enemyELPrefab); // 큰 적 생성
+            enemyEL[index].SetActive(false);
+        }
         for (int index = 0; index < enemyM.Length; index++)
         {
             enemyM[index] = Instantiate(enemyMPrefab); // 중간 적 생성
             enemyM[index].SetActive(false);
         }
+        for (int index = 0; index < enemyEM.Length; index++)
+        {
+            enemyEM[index] = Instantiate(enemyEMPrefab); // 중간 적 생성
+            enemyEM[index].SetActive(false);
+        }
         for (int index = 0; index < enemyS.Length; index++)
         {
             enemyS[index] = Instantiate(enemySPrefab); // 작은 적 생성
             enemyS[index].SetActive(false);
+        }
+        for (int index = 0; index < enemyES.Length; index++)
+        {
+            enemyES[index] = Instantiate(enemyESPrefab); // 작은 적 생성
+            enemyES[index].SetActive(false);
         }
         // #2 아이템 오브젝트 생성
         for (int index = 0; index < itemSkill.Length; index++)
@@ -177,11 +201,20 @@ public class ObjectManager : MonoBehaviour
             case "enemyL":
                 targetPool = enemyL;
                 break;
+            case "enemyEL":
+                targetPool = enemyEL;
+                break;
             case "enemyM":
                 targetPool = enemyM;
                 break;
+            case "enemyEM":
+                targetPool = enemyEM;
+                break;
             case "enemyS":
                 targetPool = enemyS;
+                break;
+            case "enemyES":
+                targetPool = enemyES;
                 break;
             case "itemSkill":
                 targetPool = itemSkill;
@@ -247,11 +280,20 @@ public class ObjectManager : MonoBehaviour
             case "enemyL":
                 targetPool = enemyL;
                 break;
+            case "enemyEL":
+                targetPool = enemyEL;
+                break;
             case "enemyM":
                 targetPool = enemyM;
                 break;
+            case "enemyEM":
+                targetPool = enemyEM;
+                break;
             case "enemyS":
                 targetPool = enemyS;
+                break;
+            case "enemyES":
+                targetPool = enemyES;
                 break;
             case "itemSkill":
                 targetPool = itemSkill;

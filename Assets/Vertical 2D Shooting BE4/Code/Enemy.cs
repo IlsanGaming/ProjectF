@@ -60,13 +60,31 @@ public class Enemy : MonoBehaviour
                 maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
                 enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
+            case "EL":
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
+                break;
             case "M":
                 health = levelDatas[enemyLevel].health;
                 speed = levelDatas[enemyLevel].speed;
                 maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
                 enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
+            case "EM":
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
+                break;
             case "S":
+                health = levelDatas[enemyLevel].health;
+                speed = levelDatas[enemyLevel].speed;
+                maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
+                enemyExp = levelDatas[enemyLevel].enemyExp;
+                break;
+            case "ES":
                 health = levelDatas[enemyLevel].health;
                 speed = levelDatas[enemyLevel].speed;
                 maxShotSpeed = levelDatas[enemyLevel].maxShotSpeed;
@@ -346,6 +364,26 @@ public class Enemy : MonoBehaviour
             }
         }
         else if (enemyName == "L")
+        {
+            switch (enemyLevel)
+            {
+                default:
+                    CreateBullet("bulletEnemyB", Vector3.right * 0.2f);
+                    CreateBullet("bulletEnemyB", Vector3.left * 0.2f);
+                    break;
+            }
+        }
+        else if (enemyName == "ES")
+        {
+            switch (enemyLevel)
+            {
+                default:
+                    CreateBullet("bulletEnemyB", Vector3.right * 0.2f);
+                    CreateBullet("bulletEnemyB", Vector3.left * 0.2f);
+                    break;
+            }
+        }
+        else if (enemyName == "EL")
         {
             switch (enemyLevel)
             {

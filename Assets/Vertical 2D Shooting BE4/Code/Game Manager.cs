@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
 
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB" };
+        enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB", "enemyEL", "enemyEM", "enemyES" };
     }
     public void ShowPrologue1()
     {
@@ -314,6 +314,15 @@ public class GameManager : MonoBehaviour
                 break;
             case "B":
                 enemyIndex = 3; // º¸½º
+                break;
+            case "EL":
+                enemyIndex = 4;
+                break;
+            case "EM":
+                enemyIndex = 5;
+                break;
+            case "ES":
+                enemyIndex = 6;
                 break;
         }
         int enemyPoint = spawnList[spawnIndex].point;
