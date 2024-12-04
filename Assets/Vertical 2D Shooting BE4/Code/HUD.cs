@@ -73,7 +73,7 @@ public class HUD : MonoBehaviour
                 break;
             case InfoType.level:
                 // 레벨 텍스트 업데이트
-                myText.text = string.Format("Lv.{0:F0}", GameManager.instance.level); // 현재 레벨 표시
+                myText.text = string.Format("{0:F0}", GameManager.instance.level); // 현재 레벨 표시
                 break;
         }
     }
