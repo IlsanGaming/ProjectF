@@ -17,7 +17,7 @@ MonoBehaviour:
   skillName: "\uC5D8\uB9AC\uC2DC\uC544\uC758 \uD65C"
   skillDesc: "\uC801\uC744 \uCD94\uC801\uD558\uB294 \uB9C8\uB825\n\uD654\uC0B4\uC744
     \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
-  skillIcon: {fileID: -344242777, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillIcon: {fileID: 21300000, guid: 391f98d8ce047f8438586d39b90a2a45, type: 3}
   grade:
   - ' '
   - "[\uAE68\uC5B4\uB09C]"

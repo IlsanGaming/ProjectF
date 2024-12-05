@@ -19,8 +19,6 @@ public class Player : MonoBehaviour
     public int AspeedLevel;
     public int WeightLevel;
 
-
-
     public int maxskill1Level;
     public int maxskill2Level;
     public int maxskill3Level;
@@ -201,8 +199,7 @@ public class Player : MonoBehaviour
         Vector3 nextVec = new Vector3(h, v, 0) * speed * Time.deltaTime;
         transform.position = curPos + nextVec;
 
-        if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
-            anim.SetInteger("Input", (int)h);
+         anim.SetInteger("Input", (int)h);
     }
     void Skill1()
     {
