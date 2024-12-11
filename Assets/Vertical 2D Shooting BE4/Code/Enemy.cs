@@ -91,7 +91,6 @@ public class Enemy : MonoBehaviour
                 enemyExp = levelDatas[enemyLevel].enemyExp;
                 break;
             case "B":
-                health = 30; // 보스 체력 고정
                 Invoke("Stop", 1.6f);
                 break;
         }

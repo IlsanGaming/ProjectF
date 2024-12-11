@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1147401495359466748, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 1e3d3fef7119450439c4e99acb9fb8b4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,7 +123,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.0416666, y: 1.0833334}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -218,12 +218,12 @@ MonoBehaviour:
     maxShotSpeed: 0
     speed: 7
     enemyExp: 7
-  enemyName: M
+  enemyName: EM
   speed: 10
   health: 15
   sprites:
-  - {fileID: -1147401495359466748, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: -7844560889915226194, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  - {fileID: 21300000, guid: 1e3d3fef7119450439c4e99acb9fb8b4, type: 3}
+  - {fileID: 21300000, guid: 723cf10491b31cf4aa81ebbe68b9ba26, type: 3}
   curShotSpeed: 0
   maxShotSpeed: 1
   enemyBulletSpeed: 10
