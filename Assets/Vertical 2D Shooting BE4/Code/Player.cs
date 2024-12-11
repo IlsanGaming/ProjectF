@@ -450,7 +450,7 @@ public class Player : MonoBehaviour
         switch (item.type)
         {
             case "Health":
-                health *=1.1f;
+                health +=10f;
                 if (health >= maxhealth)
                 {
                     health = maxhealth; 
@@ -512,7 +512,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator KnockBack(Vector3 direction)
     {
-        float knockBackDuration = 0.1f; // 밀려남 지속 시간
+        float knockBackDuration = 0.05f; // 밀려남 지속 시간
         float knockBackTimer = 0;
 
         while (knockBackTimer < knockBackDuration)
