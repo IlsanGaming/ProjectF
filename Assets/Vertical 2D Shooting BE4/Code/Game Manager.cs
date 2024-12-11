@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
     public int spawnIndex;
     public bool spawnEnd;
 
+    public AudioClip bossBgm;
+
     void Awake()
     {
         if (instance == null)
@@ -238,6 +240,8 @@ public class GameManager : MonoBehaviour
     }
     void SetGameDifference()
     {
+        if (difficulty+1 >= maxDifficulty)
+            return;
         gameTime += Time.deltaTime;
         int newDifficulty = Mathf.FloorToInt(gameTime / (maxGameTime / 10f));
 
@@ -245,6 +249,7 @@ public class GameManager : MonoBehaviour
         if (newDifficulty > maxDifficulty)
         {
             newDifficulty = maxDifficulty;
+            return;
         }
 
         // 난이도가 변경되었을 때만 텍스트를 표시
@@ -258,6 +263,8 @@ public class GameManager : MonoBehaviour
     }
     void ShowDiffText(int difflevel)
     {
+        if (difficulty + 1 >= maxDifficulty)
+            return;
         // DiffupText 배열의 해당 레벨 텍스트 활성화
         DiffupText[difflevel].SetActive(true);
 
@@ -314,6 +321,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "B":
                 enemyIndex = 3; // 보스
+                AudioManager.instance.PlaySpecificBgm(bossBgm); // 보스 전용 BGM 재생
                 break;
             case "EL":
                 enemyIndex = 4;

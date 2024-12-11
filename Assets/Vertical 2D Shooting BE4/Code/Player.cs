@@ -343,19 +343,19 @@ public class Player : MonoBehaviour
                 curCharge = 0;
                 return;
             case 1:
-                gainMultiplier = 0.3f;
+                gainMultiplier = 0.003f;
                 break;
             case 2:
-                gainMultiplier = 0.4f;
+                gainMultiplier = 0.004f;
                 break;
             case 3:
-                gainMultiplier = 0.5f;
+                gainMultiplier = 0.005f;
                 break;
             case 4:
-                gainMultiplier = 0.55f;
+                gainMultiplier = 0.0055f;
                 break;
             case 5:
-                gainMultiplier = 0.6f;
+                gainMultiplier = 0.006f;
                 break;
         }
         HealthGain(gainMultiplier);
@@ -373,7 +373,7 @@ public class Player : MonoBehaviour
     void HealthGain(float gainMultiplier)
     {
         // 회복량 계산
-        float healAmount = health * (0.1f * gainMultiplier);
+        float healAmount = maxhealth * (0.1f * gainMultiplier);
 
         // 체력 회복
         health += healAmount;
@@ -453,7 +453,8 @@ public class Player : MonoBehaviour
                 health +=10f;
                 if (health >= maxhealth)
                 {
-                    health = maxhealth; 
+                    health = maxhealth;
+                    gameManager.GetExp(Mathf.FloorToInt(GameManager.instance.nextExp[GameManager.instance.level] * 0.05f));
                 }
                 Debug.Log("Health Restored");
                 break;
@@ -465,7 +466,7 @@ public class Player : MonoBehaviour
             case "Boom":
                 if (skill5Stack == maxskill5Stack)
                 {
-                    gameManager.GetExp(5);
+                    gameManager.GetExp(Mathf.FloorToInt(GameManager.instance.nextExp[GameManager.instance.level] * 0.05f));
                     Debug.Log("Skill5 Stack Full: Extra Experience Gained");
                 }
                 else

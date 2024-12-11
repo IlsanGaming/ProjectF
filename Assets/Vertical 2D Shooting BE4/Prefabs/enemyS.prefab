@@ -163,45 +163,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDatas:
   - health: 10
-    maxShotSpeed: 1
+    maxShotSpeed: 1.7
     speed: 3
     enemyExp: 3
-  - health: 15
-    maxShotSpeed: 1
+  - health: 20
+    maxShotSpeed: 1.65
     speed: 3.1
-    enemyExp: 3
+    enemyExp: 4
   - health: 25
-    maxShotSpeed: 0.9
+    maxShotSpeed: 1.6
     speed: 3.1
-    enemyExp: 3
+    enemyExp: 6
   - health: 40
-    maxShotSpeed: 0.9
+    maxShotSpeed: 1.55
     speed: 3.2
-    enemyExp: 4
+    enemyExp: 9
+  - health: 45
+    maxShotSpeed: 1.5
+    speed: 3.2
+    enemyExp: 13
   - health: 65
-    maxShotSpeed: 0.8
-    speed: 3.2
-    enemyExp: 4
-  - health: 95
-    maxShotSpeed: 0.8
+    maxShotSpeed: 1.45
     speed: 3.3
-    enemyExp: 4
-  - health: 140
-    maxShotSpeed: 0.7
+    enemyExp: 18
+  - health: 85
+    maxShotSpeed: 1.4
     speed: 3.3
-    enemyExp: 5
-  - health: 180
-    maxShotSpeed: 0.7
+    enemyExp: 24
+  - health: 105
+    maxShotSpeed: 1.35
     speed: 3.4
-    enemyExp: 5
-  - health: 205
-    maxShotSpeed: 0.6
+    enemyExp: 31
+  - health: 120
+    maxShotSpeed: 1.3
     speed: 3.5
-    enemyExp: 5
-  - health: 255
-    maxShotSpeed: 0.6
+    enemyExp: 39
+  - health: 145
+    maxShotSpeed: 1.25
     speed: 3.6
-    enemyExp: 5
+    enemyExp: 48
   enemyName: S
   speed: 3
   health: 10

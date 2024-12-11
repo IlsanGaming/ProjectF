@@ -1281,7 +1281,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 288338cad90fbac4e9992ef8100bf6b9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e8437c91b4c064a41a71c19d91b2a7dc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.227
   m_Pitch: 1
@@ -5566,7 +5566,7 @@ AudioHighPassFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
-  m_CutoffFrequency: 5000
+  m_CutoffFrequency: 542
   m_HighpassResonanceQ: 1
 --- !u!1 &523603320
 GameObject:
@@ -15506,7 +15506,7 @@ MonoBehaviour:
   maxhealth: 100
   curVerticalBulletSpeed: 10
   curCharge: 0
-  maxCharge: 10
+  maxCharge: 0.1
   curShotSpeed: 0
   maxShotSpeed: 0.2
   lightness: 15
@@ -17657,7 +17657,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: eec2e401808892340a36abdbe9cdec0b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9f2482cb2b698714ea2f7294feb477f9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -18225,8 +18225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d476fcdbf85c74d8e67a98f1851202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 4559935c00ef8e94b846e2e03e39f0d0, type: 3}
-  bgmVolume: 0.2
+  bgmClip: {fileID: 8300000, guid: f83bbd9470a2ae44ea904e704b3c2200, type: 3}
+  bgmVolume: 0.3
   sfxClips:
   - {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
   - {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
@@ -20046,7 +20046,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 30f051de9a576914582bf87934627929, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1075c8727654d27498292653910ca4f7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.283
   m_Pitch: 1
@@ -23400,6 +23400,7 @@ MonoBehaviour:
   epilogueFrame: {fileID: 1720095372}
   spawnIndex: 0
   spawnEnd: 0
+  bossBgm: {fileID: 8300000, guid: bd11311915a013b4c9bb8c90ad91aef3, type: 3}
 --- !u!4 &2075464442
 Transform:
   m_ObjectHideFlags: 0

@@ -186,7 +186,7 @@ MonoBehaviour:
   levelDatas: []
   enemyName: B
   speed: 1.5
-  health: 10000
+  health: 1000000
   sprites: []
   curShotSpeed: 0
   maxShotSpeed: 1

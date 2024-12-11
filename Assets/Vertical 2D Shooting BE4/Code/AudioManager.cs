@@ -83,4 +83,10 @@ public class AudioManager : MonoBehaviour
             break;
         }
     }
+    public void PlaySpecificBgm(AudioClip newClip)
+    {
+        bgmPlayer.Stop(); // 기존 BGM 정지
+        bgmPlayer.clip = newClip; // 새로운 BGM 설정
+        bgmPlayer.Play(); // 새로운 BGM 재생
+    }
 }
