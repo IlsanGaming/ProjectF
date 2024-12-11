@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
-using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
@@ -418,6 +417,7 @@ public class Player : MonoBehaviour
             RemoveBullets("bulletBossA");
             RemoveBullets("bulletBossB");
         }
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Boom);
     }
     // 적 총알 제거 처리 함수
     void RemoveBullets(string type)

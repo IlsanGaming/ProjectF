@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
     public int channels;
     AudioSource[] sfxPlayers;
     int channelIndex;
-    public enum Sfx {EnemyDead,EnemyHit,LevelUp=3,Lose,PlayerHit,Range=7,Select,Win,Pickup}
+    public enum Sfx {EnemyDead,EnemyHit,LevelUp=3,Lose,PlayerHit,Range=7,Select,Win,Pickup,Boom,Morse}
 
     void Awake()
     {

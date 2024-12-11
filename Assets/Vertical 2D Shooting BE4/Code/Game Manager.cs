@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
             return;
         // DiffupText 배열의 해당 레벨 텍스트 활성화
         DiffupText[difflevel].SetActive(true);
-
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Morse);
         // 5초 후 비활성화를 위한 코루틴 실행
         StartCoroutine(HideDiffTextAfterDelay(difflevel));
     }
@@ -276,7 +276,6 @@ public class GameManager : MonoBehaviour
     {
         // 5초 대기
         yield return new WaitForSeconds(5f);
-
         // DiffupText 배열의 해당 레벨 텍스트 비활성화
         DiffupText[difflevel].SetActive(false);
     }
