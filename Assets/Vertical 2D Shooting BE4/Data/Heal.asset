@@ -16,7 +16,7 @@ MonoBehaviour:
   skillId: 9
   skillName: "\uCE58\uC720\uC758 \uBA54\uC544\uB9AC"
   skillDesc: "\uC0DD\uBA85\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
-  skillIcon: {fileID: 21300000, guid: af6516925b243e641844bce4f4e535b9, type: 3}
+  skillIcon: {fileID: 21300000, guid: 301f7bde0ab933145a0c7eb2c3e59fbc, type: 3}
   grade:
   - ' '
   - ' '
