@@ -102,19 +102,19 @@ public class Player : MonoBehaviour
         switch(PspeedLevel)
         {
             case 0:
-                speed = 5f;
+                speed = 4f;
                 break;
             case 1:
-                speed = 5.2f;
+                speed = 4.2f;
                 break;
             case 2:
-                speed = 5.6f;
+                speed = 4.5f;
                 break;
             case 3:
-                speed = 6.4f;
+                speed = 4.9f;
                 break;
             case 4:
-                speed = 8f;
+                speed = 5.4f;
                 break;
         }
     }

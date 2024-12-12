@@ -69,6 +69,12 @@ public class GameManager : MonoBehaviour
         spawnList = new List<Spawn>();
         enemyObjs = new string[] { "enemyL", "enemyM", "enemyS", "enemyB", "enemyEL", "enemyEM", "enemyES" };
     }
+    void Start()
+    {
+        QualitySettings.vSyncCount = 0; // VSync 비활성화
+        Application.targetFrameRate = 60; // 60FPS로 고정
+        Time.fixedDeltaTime = 1f / 60f; // 물리 연산 주기 설정
+    }
     public void ShowPrologue1()
     {
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
